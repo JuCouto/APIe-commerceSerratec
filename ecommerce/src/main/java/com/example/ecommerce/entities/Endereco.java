@@ -119,6 +119,13 @@ public class Endereco {
 	public void setClienteList(List<Cliente> clienteList) {
 		this.clienteList = clienteList;
 	}
+
+	@Override
+	public String toString() {
+		return "Endereco [idEndereco=" + idEndereco + ", cep=" + cep + ", rua=" + rua + ", bairro=" + bairro
+				+ ", cidade=" + cidade + ", numero=" + numero + ", complemento=" + complemento + ", uf=" + uf
+				+ ", clienteList=" + clienteList + "]";
+	}
 	
 	
 }
