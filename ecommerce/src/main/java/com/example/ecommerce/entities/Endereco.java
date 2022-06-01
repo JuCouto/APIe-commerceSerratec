@@ -10,43 +10,60 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.example.ecommerce.dtos.EnderecoDTO;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "endereco")
-@JsonIdentityInfo(scope = Endereco.class, generator = ObjectIdGenerators.PropertyGenerator.class, 
-property = "idEndereco")
+@JsonIdentityInfo(scope = Endereco.class, generator = ObjectIdGenerators.PropertyGenerator.class, property = "idEndereco")
 public class Endereco {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_endereco")
 	private Integer idEndereco;
-	
+
 	@Column(name = "cep")
 	private String cep;
-	
+
 	@Column(name = "rua")
 	private String rua;
-	
+
 	@Column(name = "bairro")
-	private String bairro; 
-	
+	private String bairro;
+
 	@Column(name = "cidade")
 	private String cidade;
-	
+
 	@Column(name = "numero")
 	private Integer numero;
-	
+
 	@Column(name = "complemento")
 	private String complemento;
-	
+
 	@Column(name = "uf")
 	private String uf;
-	
-	@OneToMany (mappedBy = "endereco")
+
+	@OneToMany(mappedBy = "endereco")
 	private List<Cliente> clienteList;
+
+	public Endereco() {
+		super();
+	}
+
+	public Endereco(Integer idEndereco, String cep, String rua, String bairro, String cidade, Integer numero,
+			String complemento, String uf) {
+		super();
+		this.idEndereco = idEndereco;
+		this.cep = cep;
+		this.rua = rua;
+		this.bairro = bairro;
+		this.cidade = cidade;
+		this.numero = numero;
+		this.complemento = complemento;
+		this.uf = uf;
+	}
 
 	public Integer getIdEndereco() {
 		return idEndereco;
@@ -126,6 +143,10 @@ public class Endereco {
 				+ ", cidade=" + cidade + ", numero=" + numero + ", complemento=" + complemento + ", uf=" + uf
 				+ ", clienteList=" + clienteList + "]";
 	}
-	
-	
+
+	public EnderecoDTO converterEntidadeParaDTO() {
+		
+		return new EnderecoDTO(idEndereco, cep, rua, bairro, cidade, numero, complemento, uf);
+	}
+
 }

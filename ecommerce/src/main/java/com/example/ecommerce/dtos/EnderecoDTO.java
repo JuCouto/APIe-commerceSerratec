@@ -2,6 +2,8 @@ package com.example.ecommerce.dtos;
 
 import java.util.List;
 
+import com.example.ecommerce.entities.Endereco;
+
 public class EnderecoDTO {
 	private Integer idEndereco;
 
@@ -20,6 +22,19 @@ public class EnderecoDTO {
 	private String uf;
 
 	private List<ClienteDTO> clienteList;
+
+	public EnderecoDTO(Integer idEndereco, String cep, String rua, String bairro, String cidade, Integer numero,
+			String complemento, String uf) {
+		super();
+		this.idEndereco = idEndereco;
+		this.cep = cep;
+		this.rua = rua;
+		this.bairro = bairro;
+		this.cidade = cidade;
+		this.numero = numero;
+		this.complemento = complemento;
+		this.uf = uf;
+	}
 
 	public Integer getIdEndereco() {
 		return idEndereco;
@@ -93,5 +108,9 @@ public class EnderecoDTO {
 		this.clienteList = clienteList;
 	}
 	
-	
+	public Endereco converterDTOParaEntidade() {
+		
+		return new Endereco(idEndereco, cep, rua, bairro, cidade, numero, complemento, uf);
+	}
+
 }

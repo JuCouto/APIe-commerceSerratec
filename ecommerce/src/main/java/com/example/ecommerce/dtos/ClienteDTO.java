@@ -1,7 +1,7 @@
 package com.example.ecommerce.dtos;
 
 public class ClienteDTO {
-	
+
 	private Integer idCliente;
 
 	private String emailCliente;
@@ -11,7 +11,7 @@ public class ClienteDTO {
 	private String cpfCliente;
 
 	private String telefoneCliente;
-	
+
 	private EnderecoDTO endereco;
 
 	public Integer getIdCliente() {
@@ -61,6 +61,5 @@ public class ClienteDTO {
 	public void setEndereco(EnderecoDTO endereco) {
 		this.endereco = endereco;
 	}
-	
-	
+
 }

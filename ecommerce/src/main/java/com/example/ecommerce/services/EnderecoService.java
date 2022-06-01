@@ -33,4 +33,12 @@ public class EnderecoService {
 	public void deleteEndereco(Integer id) {
 		enderecoRepository.deleteById(id);
 	}
+	
+	/*@Override
+    public FilmeOmdbDto buscarFilmeApiExternaPorImdb(String imdb) {
+        RestTemplate restTemplate = new RestTemplate();
+        FilmeOmdbDto filmeTO = restTemplate.getForObject(API_IMDB + imdb + API_KEY, FilmeOmdbDto.class);
+        return filmeTO;
+
+    }*/
 }
