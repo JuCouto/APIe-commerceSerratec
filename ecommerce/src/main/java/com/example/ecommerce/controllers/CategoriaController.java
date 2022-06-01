@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ecommerce.entities.Categoria;
+import com.example.ecommerce.exceptions.NoSuchElementFoundException;
 import com.example.ecommerce.services.CategoriaService;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
@@ -38,7 +39,7 @@ public class CategoriaController {
 	public ResponseEntity<Categoria> findCategoriaById(@PathVariable Integer id) {
 		Categoria categoria = categoriaService.findCategoriaById(id);
 		if (categoria == null) {
-			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+			throw new NoSuchElementFoundException("O " + id + " não existe");
 		} else {
 			return new ResponseEntity<>(categoria, HttpStatus.OK);
 		}

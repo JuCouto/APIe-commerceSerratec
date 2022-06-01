@@ -1,0 +1,6 @@
+package com.example.ecommerce.exceptions;
+
+public class NoSuchElementFoundException extends RuntimeException {
+
+	public 
+}

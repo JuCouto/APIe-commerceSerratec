@@ -1,0 +1,7 @@
+package com.example.ecommerce.exceptions;
+
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
+
+}
