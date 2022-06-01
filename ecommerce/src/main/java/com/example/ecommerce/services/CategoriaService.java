@@ -14,6 +14,12 @@ public class CategoriaService {
 	@Autowired
 	CategoriaRepository categoriaRepository;
 	
+	@Autowired
+	MailService mailService;
+	
+	@Autowired
+	ArquivoService arquivoService;
+	
 	public List<Categoria> findAllCategoria() {
 		return categoriaRepository.findAll();
 	}
@@ -33,4 +39,5 @@ public class CategoriaService {
 	public void deleteCategoria(Integer id) {
 		categoriaRepository.deleteById(id);
 	}
+	
 }
