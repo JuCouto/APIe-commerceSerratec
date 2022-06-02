@@ -23,6 +23,10 @@ public class EnderecoDTO {
 
 	private List<ClienteDTO> clienteList;
 
+	public EnderecoDTO() {
+		super();
+	}
+
 	public EnderecoDTO(Integer idEndereco, String cep, String rua, String bairro, String cidade, Integer numero,
 			String complemento, String uf) {
 		super();
@@ -107,9 +111,9 @@ public class EnderecoDTO {
 	public void setClienteList(List<ClienteDTO> clienteList) {
 		this.clienteList = clienteList;
 	}
-	
+
 	public Endereco converterDTOParaEntidade() {
-		
+
 		return new Endereco(idEndereco, cep, rua, bairro, cidade, numero, complemento, uf);
 	}
 

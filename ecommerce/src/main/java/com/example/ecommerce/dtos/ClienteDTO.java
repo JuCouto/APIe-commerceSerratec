@@ -14,6 +14,21 @@ public class ClienteDTO {
 
 	private EnderecoDTO endereco;
 
+	public ClienteDTO() {
+		super();
+	}
+
+	public ClienteDTO(Integer idCliente, String emailCliente, String nomeCliente, String cpfCliente,
+			String telefoneCliente, EnderecoDTO endereco) {
+		super();
+		this.idCliente = idCliente;
+		this.emailCliente = emailCliente;
+		this.nomeCliente = nomeCliente;
+		this.cpfCliente = cpfCliente;
+		this.telefoneCliente = telefoneCliente;
+		this.endereco = endereco;
+	}
+
 	public Integer getIdCliente() {
 		return idCliente;
 	}

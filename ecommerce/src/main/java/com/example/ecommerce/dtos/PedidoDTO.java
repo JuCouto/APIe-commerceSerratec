@@ -1,6 +1,7 @@
 package com.example.ecommerce.dtos;
 
 import java.util.Date;
+import java.util.List;
 
 public class PedidoDTO {
 	private Integer idPedido;
@@ -12,6 +13,21 @@ public class PedidoDTO {
 	private Date dataEnvio;
 
 	private Boolean statusPedido;
+
+	private List<ItemPedidoDTO> itemPedidoDTO;
+
+	public PedidoDTO() {
+		super();
+	}
+
+	public PedidoDTO(Integer idPedido, Date dataPedido, Date dataEntrega, Date dataEnvio, Boolean statusPedido) {
+		super();
+		this.idPedido = idPedido;
+		this.dataPedido = dataPedido;
+		this.dataEntrega = dataEntrega;
+		this.dataEnvio = dataEnvio;
+		this.statusPedido = statusPedido;
+	}
 
 	public Integer getIdPedido() {
 		return idPedido;
@@ -52,6 +68,5 @@ public class PedidoDTO {
 	public void setStatusPedido(Boolean statusPedido) {
 		this.statusPedido = statusPedido;
 	}
-	
-	
+
 }
