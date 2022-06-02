@@ -3,6 +3,7 @@ package com.example.ecommerce.dtos;
 import java.util.List;
 
 public class CategoriaDTO {
+	
 	private Integer idCategoria;
 
 	private String nomeCategoria;

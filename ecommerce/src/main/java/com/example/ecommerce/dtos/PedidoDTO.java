@@ -69,4 +69,12 @@ public class PedidoDTO {
 		this.statusPedido = statusPedido;
 	}
 
+	public List<ItemPedidoDTO> getItemPedidoDTO() {
+		return itemPedidoDTO;
+	}
+
+	public void setItemPedidoDTO(List<ItemPedidoDTO> itemPedidoDTO) {
+		this.itemPedidoDTO = itemPedidoDTO;
+	}
+
 }

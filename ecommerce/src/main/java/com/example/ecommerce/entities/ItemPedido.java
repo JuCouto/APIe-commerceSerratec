@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -18,7 +19,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 property = "idItemPedido")
 public class ItemPedido {
 
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_item_pedido")
@@ -46,7 +46,7 @@ public class ItemPedido {
 	@ManyToOne
     @JoinColumn(name = "id_produto", referencedColumnName = "id_produto")
     private Produto produto;
-
+	
 	public Integer getIdItemPedido() {
 		return idItemPedido;
 	}
@@ -64,7 +64,7 @@ public class ItemPedido {
 	}
 
 	public Double getPrecoVenda() {
-		return precoVenda;
+		return precoVenda = produto.getValorUnitario();
 	}
 
 	public void setPrecoVenda(Double precoVenda) {
@@ -80,7 +80,7 @@ public class ItemPedido {
 	}
 
 	public Double getValorBruto() {
-		return valorBruto;
+		return valorBruto = getPrecoVenda() * getQtdItemPedido();
 	}
 
 	public void setValorBruto(Double valorBruto) {
@@ -88,7 +88,7 @@ public class ItemPedido {
 	}
 
 	public Double getValorLiquido() {
-		return valorLiquido;
+		return valorLiquido = getValorBruto() - getPercentualDesconto();
 	}
 
 	public void setValorLiquido(Double valorLiquido) {

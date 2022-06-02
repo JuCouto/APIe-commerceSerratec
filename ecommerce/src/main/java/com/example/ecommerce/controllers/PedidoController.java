@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ecommerce.entities.Pedido;
 import com.example.ecommerce.services.PedidoService;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
 @RequestMapping("/pedido")
@@ -50,6 +50,21 @@ public class PedidoController {
 		Pedido novoPedido = pedidoService.savePedido(pedido);
 		return new ResponseEntity<>(novoPedido, HttpStatus.CREATED);
 	}
+	
+	/*
+	 * @PostMapping public ResponseEntity<Pedido> create(@RequestBody Order form) {
+	 * List<ItemPedido> formDtos = form.getProductPedidos();
+	 * validateProductsExistence(formDtos); // create Pedido logic // populate
+	 * Pedido with products
+	 * 
+	 * Pedido.setPedidoProducts(PedidoProducts); this.PedidoService.update(Pedido);
+	 * 
+	 * String uri = ServletUriComponentsBuilder .fromCurrentServletMapping()
+	 * .path("/Pedidos/{id}") .buildAndExpand(Pedido.getId()) .toString();
+	 * HttpHeaders headers = new HttpHeaders(); headers.add("Location", uri);
+	 * 
+	 * return new ResponseEntity<>(Pedido, headers, HttpStatus.CREATED); }
+	 */
 
 	@PutMapping
 	public ResponseEntity<Pedido> updatePedido(@RequestBody Pedido pedido) {
