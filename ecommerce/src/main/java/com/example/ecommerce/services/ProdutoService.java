@@ -19,104 +19,103 @@ public class ProdutoService {
 
 	@Autowired
 	ProdutoRepository produtoRepository;
-	
+
 	@Autowired
 	CategoriaService categoriaService;
-	
+
 	@Autowired
 	ArquivoService arquivoService;
-	
+
 	@Autowired
 	MailService mailService;
-	
+
 	public List<Produto> findAllProduto() {
 		return produtoRepository.findAll();
 	}
-	
+
 	public Produto findProdutoById(Integer id) {
 		return produtoRepository.findById(id).isPresent() ? produtoRepository.findById(id).get() : null;
 	}
-	
+
 	public ProdutoDTO findProdutoDTOById(Integer id) {
-		Produto produto =  produtoRepository.findById(id).isPresent() ? produtoRepository.findById(id).get() : null;
+		Produto produto = produtoRepository.findById(id).isPresent() ? produtoRepository.findById(id).get() : null;
 		ProdutoDTO produtoDTO = new ProdutoDTO();
 		if (produto != null) {
 			produtoDTO = converterEntidadeParaDTO(produto);
 		}
 		return produtoDTO;
 	}
-	
+
 	public Produto saveProduto(Produto produto) {
 		return produtoRepository.save(produto);
 	}
-	
+
 	public ProdutoDTO saveProdutoDTO(ProdutoDTO produtoDTO) {
 		Produto produto = converterDTOParaEntidade(produtoDTO);
 		Produto novoProduto = produtoRepository.save(produto);
 		return converterEntidadeParaDTO(novoProduto);
 	}
-	
-	public Produto saveProdutoComFoto(String produtoString, MultipartFile file) throws Exception{
+
+	public Produto saveProdutoComFoto(String produtoString, MultipartFile file) throws Exception {
 		Produto produtoConvertido = new Produto();
 		try {
 			ObjectMapper objMapper = new ObjectMapper();
-			produtoConvertido = objMapper.readValue(produtoString,Produto.class);
+			produtoConvertido = objMapper.readValue(produtoString, Produto.class);
 		} catch (IOException e) {
 			System.out.println("Ocorreu um erro ao salvar imagem");
 		}
 		Produto produtoBD = produtoRepository.save(produtoConvertido);
-		produtoBD.setImagemProduto(produtoBD.getIdProduto()+ "_" + file.getOriginalFilename());
+		produtoBD.setImagemProduto(produtoBD.getIdProduto() + "_" + file.getOriginalFilename());
 		Produto produtoAtualizado = produtoRepository.save(produtoBD);
 		try {
-			arquivoService.criarArquivo(produtoBD.getIdProduto() + "_" + file.getOriginalFilename(),file);
-			
+			arquivoService.criarArquivo(produtoBD.getIdProduto() + "_" + file.getOriginalFilename(), file);
+
 		} catch (Exception e) {
-			throw new Exception ("Não foi possível mover o arquivo.-" + e.getStackTrace());
-		} arquivoService.criarArquivo(produtoBD.getIdProduto() + "_" + file.getOriginalFilename(),file);
-		
-		String corpoEmail = "Foi cadastrado uma nova categoria " + produtoAtualizado.toString(); 
+			throw new Exception("Não foi possível mover o arquivo.-" + e.getStackTrace());
+		}
+		arquivoService.criarArquivo(produtoBD.getIdProduto() + "_" + file.getOriginalFilename(), file);
+
+		String corpoEmail = "Foi cadastrado uma nova categoria " + produtoAtualizado.toString();
 		mailService.enviarEmailTexto("teste@teste.com", "cadastroProduto", corpoEmail);
-		
+
 		return produtoAtualizado;
 	}
-	
-	public ProdutoDTO saveProdutoComFotoDTO(String produtoStringDTO, MultipartFile file) throws Exception{
+
+	public ProdutoDTO saveProdutoComFotoDTO(String produtoStringDTO, MultipartFile file) throws Exception {
 		ProdutoDTO produtoConvertidoDTO = new ProdutoDTO();
-		try {			
+		try {
 			ObjectMapper objMapper = new ObjectMapper();
-			produtoConvertidoDTO = objMapper.readValue(produtoStringDTO,ProdutoDTO.class);
+			produtoConvertidoDTO = objMapper.readValue(produtoStringDTO, ProdutoDTO.class);
 		} catch (IOException e) {
 			System.out.println("Ocorreu um erro ao salvar imagem");
 		}
-		
-		Produto produto = converterDTOParaEntidade(produtoConvertidoDTO); 
+
+		Produto produto = converterDTOParaEntidade(produtoConvertidoDTO);
 		Produto produtoBD = produtoRepository.save(produto);
-		ProdutoDTO produtoBDDTO = converterEntidadeParaDTO(produtoBD); 
-		produtoBDDTO.setImagemProduto(produtoBDDTO.getIdProduto()+ "_" + file.getOriginalFilename());
-		Produto produto2 = converterDTOParaEntidade(produtoBDDTO);
-		Produto produtoAtualizado = produtoRepository.save(produto2);
+		produtoBD.setImagemProduto(produtoBD.getIdProduto() + "" + file.getOriginalFilename());
+		Produto produtoAtualizado = produtoRepository.save(produtoBD);
 		try {
-			arquivoService.criarArquivo(produtoBDDTO.getIdProduto() + "_" + file.getOriginalFilename(),file);
-			
+			arquivoService.criarArquivo(produtoBD.getIdProduto() + "" + file.getOriginalFilename(), file);
+
 		} catch (Exception e) {
-			throw new Exception ("Não foi possível mover o arquivo.-" + e.getStackTrace());
-		} 
-		arquivoService.criarArquivo(produtoBD.getIdProduto() + "_" + file.getOriginalFilename(),file);
-		
-		String corpoEmail = "Foi cadastrado uma nova categoria " + produtoAtualizado.toString(); 
+			throw new Exception("Não foi possível mover o arquivo.-" + e.getStackTrace());
+		}
+		arquivoService.criarArquivo(produtoBD.getIdProduto() + "_" + file.getOriginalFilename(), file);
+
+		String corpoEmail = "Foi cadastrado uma nova categoria " + produtoConvertidoDTO.toString();
 		mailService.enviarEmailTexto("teste@teste.com", "cadastroProduto", corpoEmail);
-		
+
 		return converterEntidadeParaDTO(produtoAtualizado);
 	}
-	
+
 	public Produto updateProduto(Produto produto) {
 		return produtoRepository.save(produto);
 	}
-	
+
 	public void deleteProduto(Integer id) {
 		produtoRepository.deleteById(id);
 	}
-	
+
 	public ProdutoDTO converterEntidadeParaDTO(Produto produto) {
 		ProdutoDTO produtoDTO = new ProdutoDTO();
 		produtoDTO.setDescricaoProduto(produto.getDescricaoProduto());
@@ -130,7 +129,7 @@ public class ProdutoService {
 
 		return produtoDTO;
 	}
-	
+
 	public Produto converterDTOParaEntidade(ProdutoDTO produtoDTO) {
 		Produto produto = new Produto();
 		produto.setDescricaoProduto(produtoDTO.getDescricaoProduto());
@@ -141,7 +140,7 @@ public class ProdutoService {
 		produto.setQtdEstoque(produtoDTO.getQtdEstoque());
 		Categoria categoria = categoriaService.findCategoriaById(produtoDTO.getCategoriaDTO().getIdCategoria());
 		produto.setCategoria(categoria);
-		
+
 		return produto;
 	}
 }

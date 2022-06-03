@@ -82,6 +82,13 @@ public class ProdutoDTO {
 	public void setCategoriaDTO(CategoriaDTO categoriaDTO) {
 		this.categoriaDTO = categoriaDTO;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "ProdutoDTO [idProduto=" + idProduto + ", nomeProduto=" + nomeProduto + ", descricaoProduto="
+				+ descricaoProduto + ", qtdEstoque=" + qtdEstoque + ", dataCadastro=" + dataCadastro
+				+ ", valorUnitario=" + valorUnitario + ", imagemProduto=" + imagemProduto + ", categoriaDTO="
+				+ categoriaDTO + "]";
+	}
+
 }
