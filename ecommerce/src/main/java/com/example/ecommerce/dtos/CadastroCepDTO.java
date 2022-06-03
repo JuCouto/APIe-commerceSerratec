@@ -1,7 +1,5 @@
 package com.example.ecommerce.dtos;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 public class CadastroCepDTO {
 
 	private String cep;

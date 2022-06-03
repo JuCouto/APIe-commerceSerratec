@@ -8,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -64,7 +63,7 @@ public class ItemPedido {
 	}
 
 	public Double getPrecoVenda() {
-		return precoVenda = produto.getValorUnitario();
+		return precoVenda;
 	}
 
 	public void setPrecoVenda(Double precoVenda) {
@@ -80,7 +79,7 @@ public class ItemPedido {
 	}
 
 	public Double getValorBruto() {
-		return valorBruto = getPrecoVenda() * getQtdItemPedido();
+		return valorBruto;
 	}
 
 	public void setValorBruto(Double valorBruto) {
@@ -88,7 +87,7 @@ public class ItemPedido {
 	}
 
 	public Double getValorLiquido() {
-		return valorLiquido = getValorBruto() - getPercentualDesconto();
+		return valorLiquido;
 	}
 
 	public void setValorLiquido(Double valorLiquido) {

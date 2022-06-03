@@ -9,6 +9,7 @@ import com.example.ecommerce.dtos.ClienteDTO;
 import com.example.ecommerce.dtos.EnderecoDTO;
 import com.example.ecommerce.entities.Cliente;
 import com.example.ecommerce.entities.Endereco;
+import com.example.ecommerce.exceptions.NoSuchElementFoundException;
 import com.example.ecommerce.repositories.ClienteRepository;
 
 @Service
@@ -42,6 +43,7 @@ public class ClienteService {
 	}
 
 	public ClienteDTO saveClienteDTO(ClienteDTO clienteDTO) {
+		validarCPF(clienteDTO.getCpfCliente());
 		Cliente cliente = converterDTOParaEntidade(clienteDTO);
 		Cliente novoCliente = clienteRepository.save(cliente);
 
@@ -88,5 +90,11 @@ public class ClienteService {
 
 		return cliente;
 	}
-
+	
+	private void validarCPF(String cpf) {
+		var cliente = clienteRepository.findByCpfCliente(cpf);
+		if (cliente.isPresent()) {
+			throw new NoSuchElementFoundException("Esse cpf já existe no bando de dados");
+		}
+	}
 }

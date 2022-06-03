@@ -12,7 +12,6 @@ import javax.persistence.Table;
 
 import com.example.ecommerce.dtos.EnderecoDTO;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 

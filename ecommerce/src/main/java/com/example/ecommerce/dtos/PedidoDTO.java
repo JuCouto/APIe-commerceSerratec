@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 public class PedidoDTO {
+	
 	private Integer idPedido;
 
 	private Date dataPedido;
@@ -13,6 +14,8 @@ public class PedidoDTO {
 	private Date dataEnvio;
 
 	private Boolean statusPedido;
+	
+	private Double total;
 
 	private List<ItemPedidoDTO> itemPedidoDTO;
 
@@ -75,6 +78,14 @@ public class PedidoDTO {
 
 	public void setItemPedidoDTO(List<ItemPedidoDTO> itemPedidoDTO) {
 		this.itemPedidoDTO = itemPedidoDTO;
+	}
+
+	public Double getTotal() {
+		return total;
+	}
+
+	public void setTotal(Double total) {
+		this.total = total;
 	}
 
 }

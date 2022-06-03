@@ -33,4 +33,25 @@ public class ItemPedidoService {
 	public void deleteItemPedido(Integer id) {
 		itemPedidoRepository.deleteById(id);
 	}
+
+	public List<ItemPedido> saveItemPedido(List<ItemPedido> listaItemPedido) {
+		return itemPedidoRepository.saveAll(listaItemPedido);
+	}
+	
+	/*
+	 * public ItemPedidoDTO converterEntidadeParaDTO(ItemPedido itemPedido) {
+	 * ItemPedidoDTO itemPedidoDTO = new ItemPedidoDTO();
+	 * itemPedidoDTO.setIdItemPedido(itemPedido.getIdItemPedido());
+	 * itemPedidoDTO.setPercentualDesconto(itemPedido.getPercentualDesconto());
+	 * itemPedidoDTO.setQtdItemPedido(itemPedido.getQtdItemPedido());
+	 * itemPedidoDTO.setPrecoVenda(itemPedido.getPrecoVenda());
+	 * itemPedidoDTO.setValorBruto(itemPedidoDTO.getPrecoVenda() *
+	 * itemPedidoDTO.getQtdItemPedido());
+	 * itemPedidoDTO.setValorLiquido(itemPedidoDTO.getValorBruto() -
+	 * itemPedidoDTO.getPercentualDesconto()); ProdutoDTO produtoDTO =
+	 * produtoService.findProdutoDTOById(itemPedido.getProduto().getIdProduto());
+	 * itemPedidoDTO.setProduto(produtoDTO);
+	 * 
+	 * returnitem PedidoDTO; }
+	 */
 }

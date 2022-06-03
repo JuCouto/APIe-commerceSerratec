@@ -10,10 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import com.example.ecommerce.dtos.PedidoDTO;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
@@ -38,23 +38,20 @@ public class Pedido {
 	@Column(name = "status")
 	private Boolean statusPedido;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "pedido")
 	private List<ItemPedido> listaItemPedido;
 
-	@Transient
-    public Double getTotalItemPedidos() {
-        Double soma = 0.0;
-        List<ItemPedido> itemPedidos = getListaItemPedido();
-        for (ItemPedido op : itemPedidos) {
-            soma += op.getValorLiquido();
-        }
-        return soma;
-    }
+	/*
+	 * @Transient public Double getTotalItemPedidos() { Double soma = 0.0;
+	 * List<ItemPedido> itemPedidos = getListaItemPedido(); for (ItemPedido op :
+	 * itemPedidos) { soma += op.getValorLiquido(); } return soma; }
+	 */
 
-    @Transient
-    public Integer getNumberOfProducts() {
-        return this.listaItemPedido.size();
-    }
+	/*
+	 * @Transient public Integer getNumberOfProducts() { return
+	 * this.listaItemPedido.size(); }
+	 */
     
 	public Pedido() {
 		super();

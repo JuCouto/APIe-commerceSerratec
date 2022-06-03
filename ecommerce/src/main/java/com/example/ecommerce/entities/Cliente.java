@@ -31,6 +31,7 @@ public class Cliente {
 	@Column(name = "nome_completo")
 	private String nomeCliente;
 	
+	@CPF
 	@Column(name = "cpf")
 	private String cpfCliente;
 	

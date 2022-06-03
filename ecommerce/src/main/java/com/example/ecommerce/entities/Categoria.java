@@ -11,6 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
@@ -30,6 +31,7 @@ public class Categoria {
 	@Column(name = "descricao")
 	private String descricaoCategoria;
 	
+	@JsonIgnore
 	@OneToMany (mappedBy = "categoria")
 	private List<Produto> produtoList;
 

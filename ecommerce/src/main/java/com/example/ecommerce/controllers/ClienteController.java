@@ -2,9 +2,12 @@ package com.example.ecommerce.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +23,7 @@ import com.example.ecommerce.services.ClienteService;
 
 @RestController
 @RequestMapping("/cliente")
+@Validated
 public class ClienteController {
 
 	@Autowired
@@ -47,7 +51,7 @@ public class ClienteController {
 	}
 
 	@PostMapping("/dto")
-	public ResponseEntity<ClienteDTO> saveClienteDTO(@RequestBody ClienteDTO clienteDTO) {
+	public ResponseEntity<ClienteDTO> saveClienteDTO(@Valid @RequestBody ClienteDTO clienteDTO) {
 		ClienteDTO novoClienteDTO = clienteService.saveClienteDTO(clienteDTO);
 		return new ResponseEntity<>(novoClienteDTO, HttpStatus.CREATED);
 	}
