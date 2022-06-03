@@ -49,6 +49,11 @@ public class EnderecoController {
 		Endereco novoEndereco = enderecoService.saveEndereco(endereco);
 		return new ResponseEntity<>(novoEndereco, HttpStatus.CREATED);
 	}
+	@PostMapping("/{cep}")
+	public ResponseEntity<Endereco> saveEnderecoCep(@PathVariable String cep){
+		Endereco novoEndereco = enderecoService.saveEnderecoCep(cep);
+		return new ResponseEntity<>(novoEndereco, HttpStatus.CREATED);
+	}
 
 	@PutMapping
 	public ResponseEntity<Endereco> updateEndereco(@RequestBody Endereco endereco) {

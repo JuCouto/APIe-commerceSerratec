@@ -1,10 +1,15 @@
 package com.example.ecommerce.services;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import com.example.ecommerce.dtos.CadastroCepDTO;
 import com.example.ecommerce.dtos.EnderecoDTO;
 import com.example.ecommerce.entities.Endereco;
 import com.example.ecommerce.repositories.EnderecoRepository;
@@ -46,6 +51,11 @@ public class EnderecoService {
 		return enderecoRepository.save(endereco);
 	}
 
+	public Endereco saveEnderecoCep(String cep) {
+		Endereco novoEndereco = consultarCep(cep);
+		return enderecoRepository.save(novoEndereco);
+	}
+
 	public EnderecoDTO updateEnderecoDTO(EnderecoDTO enderecoDTO) {
 		Endereco endereco = enderecoRepository.save(enderecoDTO.converterDTOParaEntidade());
 		return endereco.converterEntidadeParaDTO();
@@ -55,12 +65,28 @@ public class EnderecoService {
 		enderecoRepository.deleteById(id);
 	}
 
-	/*
-	 * @Override public FilmeOmdbDto buscarFilmeApiExternaPorImdb(String imdb) {
-	 * RestTemplate restTemplate = new RestTemplate(); FilmeOmdbDto filmeTO =
-	 * restTemplate.getForObject(API_IMDB + imdb + API_KEY, FilmeOmdbDto.class);
-	 * return filmeTO;
-	 * 
-	 * }
-	 */
+	
+	  public Endereco consultarCep(String cep) { RestTemplate restTemplate = new
+	  RestTemplate(); Endereco endereco =
+	  restTemplate.getForObject("https://viacep.com.br/ws/"+ cep + "/json/" , Endereco.class);
+	  return endereco;
+	  
+	  }
+	 
+	/*public CadastroCepDTO consultarDadosPorCep(String cep) {
+		RestTemplate rt = new RestTemplate();
+		String uri = "viacep.com.br/ws/{cep}/json/";
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("cep", cep);
+		CadastroCepDTO ccd = rt.getForObject(uri, CadastroCepDTO.class, params);
+
+		return ccd;
+	}
+
+	public Endereco enderecoCep(String cep) {
+		CadastroCepDTO cert = consultarDadosPorCep(cep);
+		Endereco endereco = new Endereco();
+		BeanUtils.copyProperties(cert, endereco);
+		return endereco;
+	}*/
 }

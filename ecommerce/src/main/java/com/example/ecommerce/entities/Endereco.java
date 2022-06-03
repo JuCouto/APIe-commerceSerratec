@@ -12,6 +12,7 @@ import javax.persistence.Table;
 
 import com.example.ecommerce.dtos.EnderecoDTO;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
@@ -27,17 +28,19 @@ public class Endereco {
 	@Column(name = "cep")
 	private String cep;
 
+	@JsonProperty("logradouro")
 	@Column(name = "rua")
 	private String rua;
 
 	@Column(name = "bairro")
 	private String bairro;
 
+	@JsonProperty("localidade")
 	@Column(name = "cidade")
 	private String cidade;
 
 	@Column(name = "numero")
-	private Integer numero;
+	private String numero;
 
 	@Column(name = "complemento")
 	private String complemento;
@@ -52,7 +55,7 @@ public class Endereco {
 		super();
 	}
 
-	public Endereco(Integer idEndereco, String cep, String rua, String bairro, String cidade, Integer numero,
+	public Endereco(Integer idEndereco, String cep, String rua, String bairro, String cidade, String numero,
 			String complemento, String uf) {
 		super();
 		this.idEndereco = idEndereco;
@@ -105,11 +108,11 @@ public class Endereco {
 		this.cidade = cidade;
 	}
 
-	public Integer getNumero() {
+	public String getNumero() {
 		return numero;
 	}
 
-	public void setNumero(Integer numero) {
+	public void setNumero(String numero) {
 		this.numero = numero;
 	}
 

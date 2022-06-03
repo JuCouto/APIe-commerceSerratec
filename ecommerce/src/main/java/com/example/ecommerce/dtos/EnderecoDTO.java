@@ -15,7 +15,7 @@ public class EnderecoDTO {
 
 	private String cidade;
 
-	private Integer numero;
+	private String numero;
 
 	private String complemento;
 
@@ -27,7 +27,7 @@ public class EnderecoDTO {
 		super();
 	}
 
-	public EnderecoDTO(Integer idEndereco, String cep, String rua, String bairro, String cidade, Integer numero,
+	public EnderecoDTO(Integer idEndereco, String cep, String rua, String bairro, String cidade, String numero,
 			String complemento, String uf) {
 		super();
 		this.idEndereco = idEndereco;
@@ -80,11 +80,11 @@ public class EnderecoDTO {
 		this.cidade = cidade;
 	}
 
-	public Integer getNumero() {
+	public String getNumero() {
 		return numero;
 	}
 
-	public void setNumero(Integer numero) {
+	public void setNumero(String numero) {
 		this.numero = numero;
 	}
 
