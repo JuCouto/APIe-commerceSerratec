@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.ecommerce.dtos.ProdutoDTO;
 import com.example.ecommerce.entities.Produto;
 import com.example.ecommerce.services.ProdutoService;
 
@@ -46,11 +47,17 @@ public class ProdutoController {
 		}
 
 	}
-
+	
 	@PostMapping
 	public ResponseEntity<Produto> saveProduto(@RequestBody Produto produto) {
 		Produto novoProduto = produtoService.saveProduto(produto);
 		return new ResponseEntity<>(novoProduto, HttpStatus.CREATED);
+	}
+
+	@PostMapping("/dto")
+	public ResponseEntity<ProdutoDTO> saveProdutoDTO(@RequestBody ProdutoDTO produtoDTO) {
+		ProdutoDTO novoProdutoDTO = produtoService.saveProdutoDTO(produtoDTO);
+		return new ResponseEntity<>(novoProdutoDTO, HttpStatus.CREATED);
 	}
 	
 	@PostMapping(value="/com-foto", consumes = {MediaType.APPLICATION_JSON_VALUE, 
@@ -61,7 +68,14 @@ public class ProdutoController {
 		return new ResponseEntity<> (novoProduto, HttpStatus.CREATED);
 	}
 	
-
+	@PostMapping(value="/dto/com-foto", consumes = {MediaType.APPLICATION_JSON_VALUE, 
+			MediaType.MULTIPART_FORM_DATA_VALUE})
+	public ResponseEntity<ProdutoDTO> saveProdutoDTO(@RequestPart("produtoDTO") String produtoDTO, 
+			@RequestPart("file") MultipartFile file) throws Exception{
+		ProdutoDTO novoProdutoDTO = produtoService.saveProdutoComFotoDTO(produtoDTO,file);
+		return new ResponseEntity<> (novoProdutoDTO, HttpStatus.CREATED);
+	}
+	
 	@PutMapping
 	public ResponseEntity<Produto> updateProduto(@RequestBody Produto produto) {
 		Produto novoProduto = produtoService.updateProduto(produto);

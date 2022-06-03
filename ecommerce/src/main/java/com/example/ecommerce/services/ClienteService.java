@@ -67,11 +67,11 @@ public class ClienteService {
 		ClienteDTO clienteDTO = new ClienteDTO();
 		clienteDTO.setCpfCliente(cliente.getCpfCliente());
 		clienteDTO.setEmailCliente(cliente.getEmailCliente());
-		EnderecoDTO enderecoDTO = enderecoService.findEnderecoDTOById(cliente.getEndereco().getIdEndereco());
-		clienteDTO.setEndereco(enderecoDTO);
 		clienteDTO.setIdCliente(cliente.getIdCliente());
 		clienteDTO.setNomeCliente(cliente.getNomeCliente());
 		clienteDTO.setTelefoneCliente(cliente.getTelefoneCliente());
+		EnderecoDTO enderecoDTO = enderecoService.findEnderecoDTOById(cliente.getEndereco().getIdEndereco());
+		clienteDTO.setEndereco(enderecoDTO);
 
 		return clienteDTO;
 	}
@@ -80,11 +80,11 @@ public class ClienteService {
 		Cliente cliente = new Cliente();
 		cliente.setCpfCliente(clienteDTO.getCpfCliente());
 		cliente.setEmailCliente(clienteDTO.getEmailCliente());
-		Endereco endereco = enderecoService.findEnderecoById(clienteDTO.getEndereco().getIdEndereco());
-		cliente.setEndereco(endereco);
 		cliente.setIdCliente(clienteDTO.getIdCliente());
 		cliente.setNomeCliente(clienteDTO.getNomeCliente());
 		cliente.setTelefoneCliente(clienteDTO.getTelefoneCliente());
+		Endereco endereco = enderecoService.findEnderecoById(clienteDTO.getEnderecoDTO().getIdEndereco());
+		cliente.setEndereco(endereco);
 
 		return cliente;
 	}

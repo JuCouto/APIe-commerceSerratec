@@ -17,7 +17,7 @@ public class ProdutoDTO {
 
 	private String imagemProduto;
 
-	private CategoriaDTO categoria;
+	private CategoriaDTO categoriaDTO;
 
 	public Integer getIdProduto() {
 		return idProduto;
@@ -75,12 +75,12 @@ public class ProdutoDTO {
 		this.imagemProduto = imagemProduto;
 	}
 
-	public CategoriaDTO getCategoria() {
-		return categoria;
+	public CategoriaDTO getCategoriaDTO() {
+		return categoriaDTO;
 	}
 
-	public void setCategoria(CategoriaDTO categoria) {
-		this.categoria = categoria;
+	public void setCategoriaDTO(CategoriaDTO categoriaDTO) {
+		this.categoriaDTO = categoriaDTO;
 	}
 	
 	

@@ -12,21 +12,21 @@ public class ClienteDTO {
 
 	private String telefoneCliente;
 
-	private EnderecoDTO endereco;
+	private EnderecoDTO enderecoDTO;
 
 	public ClienteDTO() {
 		super();
 	}
 
 	public ClienteDTO(Integer idCliente, String emailCliente, String nomeCliente, String cpfCliente,
-			String telefoneCliente, EnderecoDTO endereco) {
+			String telefoneCliente, EnderecoDTO enderecoDTO) {
 		super();
 		this.idCliente = idCliente;
 		this.emailCliente = emailCliente;
 		this.nomeCliente = nomeCliente;
 		this.cpfCliente = cpfCliente;
 		this.telefoneCliente = telefoneCliente;
-		this.endereco = endereco;
+		this.enderecoDTO = enderecoDTO;
 	}
 
 	public Integer getIdCliente() {
@@ -69,12 +69,12 @@ public class ClienteDTO {
 		this.telefoneCliente = telefoneCliente;
 	}
 
-	public EnderecoDTO getEndereco() {
-		return endereco;
+	public EnderecoDTO getEnderecoDTO() {
+		return enderecoDTO;
 	}
 
-	public void setEndereco(EnderecoDTO endereco) {
-		this.endereco = endereco;
+	public void setEndereco(EnderecoDTO enderecoDTO) {
+		this.enderecoDTO = enderecoDTO;
 	}
 
 }

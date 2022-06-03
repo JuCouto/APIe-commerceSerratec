@@ -80,6 +80,35 @@ public class ProdutoService {
 		return produtoAtualizado;
 	}
 	
+	public ProdutoDTO saveProdutoComFotoDTO(String produtoStringDTO, MultipartFile file) throws Exception{
+		ProdutoDTO produtoConvertidoDTO = new ProdutoDTO();
+		try {			
+			ObjectMapper objMapper = new ObjectMapper();
+			produtoConvertidoDTO = objMapper.readValue(produtoStringDTO,ProdutoDTO.class);
+		} catch (IOException e) {
+			System.out.println("Ocorreu um erro ao salvar imagem");
+		}
+		
+		Produto produto = converterDTOParaEntidade(produtoConvertidoDTO); 
+		Produto produtoBD = produtoRepository.save(produto);
+		ProdutoDTO produtoBDDTO = converterEntidadeParaDTO(produtoBD); 
+		produtoBDDTO.setImagemProduto(produtoBDDTO.getIdProduto()+ "_" + file.getOriginalFilename());
+		Produto produto2 = converterDTOParaEntidade(produtoBDDTO);
+		Produto produtoAtualizado = produtoRepository.save(produto2);
+		try {
+			arquivoService.criarArquivo(produtoBDDTO.getIdProduto() + "_" + file.getOriginalFilename(),file);
+			
+		} catch (Exception e) {
+			throw new Exception ("Não foi possível mover o arquivo.-" + e.getStackTrace());
+		} 
+		arquivoService.criarArquivo(produtoBD.getIdProduto() + "_" + file.getOriginalFilename(),file);
+		
+		String corpoEmail = "Foi cadastrado uma nova categoria " + produtoAtualizado.toString(); 
+		mailService.enviarEmailTexto("teste@teste.com", "cadastroProduto", corpoEmail);
+		
+		return converterEntidadeParaDTO(produtoAtualizado);
+	}
+	
 	public Produto updateProduto(Produto produto) {
 		return produtoRepository.save(produto);
 	}
@@ -96,22 +125,22 @@ public class ProdutoService {
 		produtoDTO.setNomeProduto(produto.getNomeProduto());
 		produtoDTO.setValorUnitario(produto.getValorUnitario());
 		produtoDTO.setQtdEstoque(produto.getQtdEstoque());
-		CategoriaDTO categoriaDTO = categoriaService.findCategoriaDTOById(produtoDTO.getCategoria().getIdCategoria());
-		produtoDTO.setCategoria(categoriaDTO);
+		CategoriaDTO categoriaDTO = categoriaService.findCategoriaDTOById(produto.getCategoria().getIdCategoria());
+		produtoDTO.setCategoriaDTO(categoriaDTO);
 
 		return produtoDTO;
 	}
 	
 	public Produto converterDTOParaEntidade(ProdutoDTO produtoDTO) {
 		Produto produto = new Produto();
-		Categoria categoria = categoriaService.findCategoriaById(produto.getCategoria().getIdCategoria());
-		produto.setCategoria(categoria);
-		produto.setDataCadastro(produtoDTO.getDataCadastro());
 		produto.setDescricaoProduto(produtoDTO.getDescricaoProduto());
+		produto.setDataCadastro(produtoDTO.getDataCadastro());
 		produto.setImagemProduto(produtoDTO.getImagemProduto());
-		produto.setQtdEstoque(produtoDTO.getQtdEstoque());
+		produto.setNomeProduto(produtoDTO.getNomeProduto());
 		produto.setValorUnitario(produtoDTO.getValorUnitario());
-		produto.setImagemProduto(produtoDTO.getImagemProduto());
+		produto.setQtdEstoque(produtoDTO.getQtdEstoque());
+		Categoria categoria = categoriaService.findCategoriaById(produtoDTO.getCategoriaDTO().getIdCategoria());
+		produto.setCategoria(categoria);
 		
 		return produto;
 	}

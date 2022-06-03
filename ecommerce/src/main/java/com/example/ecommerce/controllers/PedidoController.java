@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.ecommerce.dtos.PedidoDTO;
 import com.example.ecommerce.entities.Pedido;
 import com.example.ecommerce.services.PedidoService;
 
@@ -49,6 +50,12 @@ public class PedidoController {
 	public ResponseEntity<Pedido> savePedido(@RequestBody Pedido pedido) {
 		Pedido novoPedido = pedidoService.savePedido(pedido);
 		return new ResponseEntity<>(novoPedido, HttpStatus.CREATED);
+	}
+	
+	@PostMapping("/dto")
+	public ResponseEntity<PedidoDTO> savePedidoDTO(@RequestBody PedidoDTO pedidoDTO) {
+		PedidoDTO novoPedidoDTO = pedidoService.savePedidoDTO(pedidoDTO);
+		return new ResponseEntity<>(novoPedidoDTO, HttpStatus.CREATED);
 	}
 	
 	/*

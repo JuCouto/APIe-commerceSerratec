@@ -34,8 +34,9 @@ public class CategoriaService {
 		CategoriaDTO categoriaDTO = new CategoriaDTO();
 		if (categoria != null) {
 			categoriaDTO = converterEntidadeParaDTO(categoria);
+			return categoriaDTO;
 		}
-		return categoriaDTO;
+		return null;
 	}
 
 	public Categoria saveCategoria(Categoria categoria) {

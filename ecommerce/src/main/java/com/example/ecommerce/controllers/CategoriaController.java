@@ -14,15 +14,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.ecommerce.dtos.CategoriaDTO;
 import com.example.ecommerce.entities.Categoria;
 import com.example.ecommerce.exceptions.NoSuchElementFoundException;
 import com.example.ecommerce.services.CategoriaService;
 
-
-
 @RestController
 @RequestMapping("/categoria")
 public class CategoriaController {
+
 	@Autowired
 	CategoriaService categoriaService;
 
@@ -47,16 +47,16 @@ public class CategoriaController {
 
 	}
 
-	@PostMapping
-	public ResponseEntity<Categoria> saveCategoria(@RequestBody Categoria categoria) {
-		Categoria novoCategoria = categoriaService.saveCategoria(categoria);
-		return new ResponseEntity<>(novoCategoria, HttpStatus.CREATED);
-	}
-
 	@PutMapping
 	public ResponseEntity<Categoria> updateCategoria(@RequestBody Categoria categoria) {
 		Categoria novoCategoria = categoriaService.updateCategoria(categoria);
 		return new ResponseEntity<>(novoCategoria, HttpStatus.OK);
+	}
+
+	@PostMapping("/dto")
+	public ResponseEntity<CategoriaDTO> saveCategoriaDTO(@RequestBody CategoriaDTO categoriaDTO) {
+		CategoriaDTO novaCategoriaDTO = categoriaService.saveCategoriaDTO(categoriaDTO);
+		return new ResponseEntity<>(novaCategoriaDTO, HttpStatus.CREATED);
 	}
 
 	@DeleteMapping("/{id}")
