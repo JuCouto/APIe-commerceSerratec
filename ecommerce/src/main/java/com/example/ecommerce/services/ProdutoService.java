@@ -55,6 +55,11 @@ public class ProdutoService {
 		Produto novoProduto = produtoRepository.save(produto);
 		return converterEntidadeParaDTO(novoProduto);
 	}
+	public ProdutoDTO updateProdutoDTO(ProdutoDTO produtoDTO) {
+		Produto produto = converterDTOParaEntidade(produtoDTO);
+		Produto novoProduto = produtoRepository.save(produto);
+		return converterEntidadeParaDTO(novoProduto);
+	}
 
 	public Produto saveProdutoComFoto(String produtoString, MultipartFile file) throws Exception {
 		Produto produtoConvertido = new Produto();
@@ -73,7 +78,6 @@ public class ProdutoService {
 		} catch (Exception e) {
 			throw new Exception("Não foi possível mover o arquivo.-" + e.getStackTrace());
 		}
-		arquivoService.criarArquivo(produtoBD.getIdProduto() + "_" + file.getOriginalFilename(), file);
 
 		String corpoEmail = "Foi cadastrado uma nova categoria " + produtoAtualizado.toString();
 		mailService.enviarEmailTexto("teste@teste.com", "cadastroProduto", corpoEmail);
@@ -92,15 +96,15 @@ public class ProdutoService {
 
 		Produto produto = converterDTOParaEntidade(produtoConvertidoDTO);
 		Produto produtoBD = produtoRepository.save(produto);
-		produtoBD.setImagemProduto(produtoBD.getIdProduto() + "" + file.getOriginalFilename());
+		produtoBD.setImagemProduto(produtoBD.getIdProduto() + "_" + file.getOriginalFilename());
 		Produto produtoAtualizado = produtoRepository.save(produtoBD);
 		try {
-			arquivoService.criarArquivo(produtoBD.getIdProduto() + "" + file.getOriginalFilename(), file);
+			arquivoService.criarArquivo(produtoBD.getIdProduto() + "_" + file.getOriginalFilename(), file);
 
 		} catch (Exception e) {
 			throw new Exception("Não foi possível mover o arquivo.-" + e.getStackTrace());
+
 		}
-		arquivoService.criarArquivo(produtoBD.getIdProduto() + "_" + file.getOriginalFilename(), file);
 
 		String corpoEmail = "Foi cadastrado uma nova categoria " + produtoConvertidoDTO.toString();
 		mailService.enviarEmailTexto("teste@teste.com", "cadastroProduto", corpoEmail);

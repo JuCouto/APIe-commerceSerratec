@@ -36,21 +36,21 @@ public class CategoriaController {
 		}
 	}
 
-	@GetMapping("/{id}")
-	public ResponseEntity<Categoria> findCategoriaById(@PathVariable Integer id) {
-		Categoria categoria = categoriaService.findCategoriaById(id);
-		if (categoria == null) {
+	@GetMapping("/dto/{id}")
+	public ResponseEntity<CategoriaDTO> findCategoriaDTOById(@PathVariable Integer id) {
+		CategoriaDTO categoriaDTO = categoriaService.findCategoriaDTOById(id);
+		if (categoriaDTO == null) {
 			throw new NoSuchElementFoundException("O " + id + " não existe");
 		} else {
-			return new ResponseEntity<>(categoria, HttpStatus.OK);
+			return new ResponseEntity<>(categoriaDTO, HttpStatus.OK);
 		}
 
 	}
 
-	@PutMapping
-	public ResponseEntity<Categoria> updateCategoria(@RequestBody Categoria categoria) {
-		Categoria novoCategoria = categoriaService.updateCategoria(categoria);
-		return new ResponseEntity<>(novoCategoria, HttpStatus.OK);
+	@PutMapping("/dto")
+	public ResponseEntity<CategoriaDTO> updateCategoriaDTO(@RequestBody CategoriaDTO categoriaDTO) {
+		CategoriaDTO novoCategoriaDTO = categoriaService.updateCategoriaDTO(categoriaDTO);
+		return new ResponseEntity<>(novoCategoriaDTO, HttpStatus.OK);
 	}
 
 	@PostMapping("/dto")

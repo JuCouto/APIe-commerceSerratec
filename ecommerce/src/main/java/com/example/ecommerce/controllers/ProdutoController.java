@@ -37,35 +37,21 @@ public class ProdutoController {
 		}
 	}
 
-	@GetMapping("/{id}")
-	public ResponseEntity<Produto> findProdutoById(@PathVariable Integer id) {
-		Produto produto = produtoService.findProdutoById(id);
-		if (produto == null) {
+	@GetMapping("/dto/{id}")
+	public ResponseEntity<ProdutoDTO> findProdutoDTOById(@PathVariable Integer id) {
+		ProdutoDTO produtoDTO = produtoService.findProdutoDTOById(id);
+		if (produtoDTO == null) {
 			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 		} else {
-			return new ResponseEntity<>(produto, HttpStatus.OK);
+			return new ResponseEntity<>(produtoDTO, HttpStatus.OK);
 		}
 
-	}
-	
-	@PostMapping
-	public ResponseEntity<Produto> saveProduto(@RequestBody Produto produto) {
-		Produto novoProduto = produtoService.saveProduto(produto);
-		return new ResponseEntity<>(novoProduto, HttpStatus.CREATED);
 	}
 
 	@PostMapping("/dto")
 	public ResponseEntity<ProdutoDTO> saveProdutoDTO(@RequestBody ProdutoDTO produtoDTO) {
 		ProdutoDTO novoProdutoDTO = produtoService.saveProdutoDTO(produtoDTO);
 		return new ResponseEntity<>(novoProdutoDTO, HttpStatus.CREATED);
-	}
-	
-	@PostMapping(value="/com-foto", consumes = {MediaType.APPLICATION_JSON_VALUE, 
-			MediaType.MULTIPART_FORM_DATA_VALUE})
-	public ResponseEntity<Produto> saveProduto(@RequestPart("produto") String produto, 
-			@RequestPart("file") MultipartFile file) throws Exception{
-		Produto novoProduto = produtoService.saveProdutoComFoto(produto,file);
-		return new ResponseEntity<> (novoProduto, HttpStatus.CREATED);
 	}
 	
 	@PostMapping(value="/dto/com-foto", consumes = {MediaType.APPLICATION_JSON_VALUE, 
@@ -76,10 +62,10 @@ public class ProdutoController {
 		return new ResponseEntity<> (novoProdutoDTO, HttpStatus.CREATED);
 	}
 	
-	@PutMapping
-	public ResponseEntity<Produto> updateProduto(@RequestBody Produto produto) {
-		Produto novoProduto = produtoService.updateProduto(produto);
-		return new ResponseEntity<>(novoProduto, HttpStatus.OK);
+	@PutMapping("/dto")
+	public ResponseEntity<ProdutoDTO> updateProdutoDTO(@RequestBody ProdutoDTO produtoDTO) {
+		ProdutoDTO novoProdutoDTO = produtoService.updateProdutoDTO(produtoDTO);
+		return new ResponseEntity<>(novoProdutoDTO, HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{id}")

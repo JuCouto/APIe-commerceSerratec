@@ -35,21 +35,15 @@ public class PedidoController {
 		}
 	}
 
-	@GetMapping("/{id}")
-	public ResponseEntity<Pedido> findPedidoById(@PathVariable Integer id) {
-		Pedido pedido = pedidoService.findPedidoById(id);
-		if (pedido == null) {
+	@GetMapping("/dto/{id}")
+	public ResponseEntity<PedidoDTO> findPedidoDTOById(@PathVariable Integer id) {
+		PedidoDTO pedidoDTO = pedidoService.findPedidoDTOById(id);
+		if (pedidoDTO == null) {
 			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 		} else {
-			return new ResponseEntity<>(pedido, HttpStatus.OK);
+			return new ResponseEntity<>(pedidoDTO, HttpStatus.OK);
 		}
 
-	}
-
-	@PostMapping
-	public ResponseEntity<Pedido> savePedido(@RequestBody Pedido pedido) {
-		Pedido novoPedido = pedidoService.savePedido(pedido);
-		return new ResponseEntity<>(novoPedido, HttpStatus.CREATED);
 	}
 	
 	@PostMapping("/dto")
@@ -57,26 +51,12 @@ public class PedidoController {
 		PedidoDTO novoPedidoDTO = pedidoService.savePedidoDTO(pedidoDTO);
 		return new ResponseEntity<>(novoPedidoDTO, HttpStatus.CREATED);
 	}
-	
-	/*
-	 * @PostMapping public ResponseEntity<Pedido> create(@RequestBody Order form) {
-	 * List<ItemPedido> formDtos = form.getProductPedidos();
-	 * validateProductsExistence(formDtos); // create Pedido logic // populate
-	 * Pedido with products
-	 * 
-	 * Pedido.setPedidoProducts(PedidoProducts); this.PedidoService.update(Pedido);
-	 * 
-	 * String uri = ServletUriComponentsBuilder .fromCurrentServletMapping()
-	 * .path("/Pedidos/{id}") .buildAndExpand(Pedido.getId()) .toString();
-	 * HttpHeaders headers = new HttpHeaders(); headers.add("Location", uri);
-	 * 
-	 * return new ResponseEntity<>(Pedido, headers, HttpStatus.CREATED); }
-	 */
 
-	@PutMapping
-	public ResponseEntity<Pedido> updatePedido(@RequestBody Pedido pedido) {
-		Pedido novoPedido = pedidoService.updatePedido(pedido);
-		return new ResponseEntity<>(novoPedido, HttpStatus.OK);
+
+	@PutMapping("/dto")
+	public ResponseEntity<PedidoDTO> updatePedidoDTO(@RequestBody PedidoDTO pedidoDTO) {
+		PedidoDTO novoPedidoDTO = pedidoService.updatePedidoDTO(pedidoDTO);
+		return new ResponseEntity<>(novoPedidoDTO, HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{id}")

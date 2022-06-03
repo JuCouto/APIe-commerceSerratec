@@ -35,33 +35,27 @@ public class ClienteController {
 		}
 	}
 
-	@GetMapping("/{id}")
-	public ResponseEntity<Cliente> findClienteById(@PathVariable Integer id) {
-		Cliente cliente = clienteService.findClienteById(id);
-		if (cliente == null) {
+	@GetMapping("/dto/{id}")
+	public ResponseEntity<ClienteDTO> findClienteDTOById(@PathVariable Integer id) {
+		ClienteDTO clienteDTO = clienteService.findClienteDTOById(id);
+		if (clienteDTO == null) {
 			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 		} else {
-			return new ResponseEntity<>(cliente, HttpStatus.OK);
+			return new ResponseEntity<>(clienteDTO, HttpStatus.OK);
 		}
 
 	}
 
-	@PostMapping
-	public ResponseEntity<Cliente> saveCliente(@RequestBody Cliente cliente) {
-		Cliente novoCliente = clienteService.saveCliente(cliente);
-		return new ResponseEntity<>(novoCliente, HttpStatus.CREATED);
-	}
-	
 	@PostMapping("/dto")
 	public ResponseEntity<ClienteDTO> saveClienteDTO(@RequestBody ClienteDTO clienteDTO) {
 		ClienteDTO novoClienteDTO = clienteService.saveClienteDTO(clienteDTO);
 		return new ResponseEntity<>(novoClienteDTO, HttpStatus.CREATED);
 	}
 
-	@PutMapping
-	public ResponseEntity<Cliente> updateCliente(@RequestBody Cliente cliente) {
-		Cliente novoCliente = clienteService.updateCliente(cliente);
-		return new ResponseEntity<>(novoCliente, HttpStatus.OK);
+	@PutMapping("/dto")
+	public ResponseEntity<ClienteDTO> updateClienteDTO(@RequestBody ClienteDTO clienteDTO) {
+		ClienteDTO novoClienteDTO = clienteService.updateClienteDTO(clienteDTO);
+		return new ResponseEntity<>(novoClienteDTO, HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{id}")

@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.ecommerce.dtos.CadastroCepDTO;
 import com.example.ecommerce.dtos.EnderecoDTO;
 import com.example.ecommerce.entities.Endereco;
+import com.example.ecommerce.exceptions.NoSuchElementFoundException;
 import com.example.ecommerce.services.EnderecoService;
 
 @RestController
@@ -34,40 +36,45 @@ public class EnderecoController {
 		}
 	}
 
-	@GetMapping("/{id}")
-	public ResponseEntity<Endereco> findEnderecoById(@PathVariable Integer id) {
-		Endereco endereco = enderecoService.findEnderecoById(id);
-		if (endereco == null) {
+	@GetMapping("/{cep}")
+	public ResponseEntity<CadastroCepDTO> consultarDadosPorCep(String cep) {
+		CadastroCepDTO cadastroCepDTO = enderecoService.consultarDadosPorCep(cep);
+		if (cadastroCepDTO == null) {
+			throw new NoSuchElementFoundException("Não foram encontrados esses dados por CEP");
+		} else {
+			return new ResponseEntity<>(cadastroCepDTO, HttpStatus.OK);
+		}
+	}
+
+	@GetMapping("/dto/{id}")
+	public ResponseEntity<EnderecoDTO> findEnderecoDTOById(@PathVariable Integer id) {
+		EnderecoDTO enderecoDTO = enderecoService.findEnderecoDTOById(id);
+		if (enderecoDTO == null) {
 			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 		} else {
-			return new ResponseEntity<>(endereco, HttpStatus.OK);
+			return new ResponseEntity<>(enderecoDTO, HttpStatus.OK);
 		}
 
 	}
 
-	@PostMapping
-	public ResponseEntity<Endereco> saveEndereco(@RequestBody Endereco endereco) {
-		Endereco novoEndereco = enderecoService.saveEndereco(endereco);
-		return new ResponseEntity<>(novoEndereco, HttpStatus.CREATED);
-	}
-	
 	@PostMapping("/dto")
 	public ResponseEntity<EnderecoDTO> saveEnderecoDTO(@RequestBody EnderecoDTO enderecoDTO) {
 		EnderecoDTO novoEnderecoDTO = enderecoService.saveEnderecoDTO(enderecoDTO);
 		return new ResponseEntity<>(novoEnderecoDTO, HttpStatus.CREATED);
 	}
-	
+
 	@PostMapping("/{cep}")
-	public ResponseEntity<Endereco> saveEnderecoCep(@PathVariable String cep){
+	public ResponseEntity<Endereco> saveEnderecoCep(@PathVariable String cep) {
 		Endereco novoEndereco = enderecoService.saveEnderecoCep(cep);
 		return new ResponseEntity<>(novoEndereco, HttpStatus.CREATED);
 	}
 
-	@PutMapping
-	public ResponseEntity<Endereco> updateEndereco(@RequestBody Endereco endereco) {
-		Endereco novoEndereco = enderecoService.updateEndereco(endereco);
-		return new ResponseEntity<>(novoEndereco, HttpStatus.OK);
+	@PutMapping("/dto")
+	public ResponseEntity<EnderecoDTO> updateEnderecoDTO(@RequestBody EnderecoDTO enderecoDTO) {
+		EnderecoDTO novoEnderecoDTO = enderecoService.updateEnderecoDTO(enderecoDTO);
+		return new ResponseEntity<>(novoEnderecoDTO, HttpStatus.OK);
 	}
+	
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteEndereco(@PathVariable Integer id) {

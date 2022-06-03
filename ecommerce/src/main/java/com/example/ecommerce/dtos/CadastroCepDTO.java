@@ -1,5 +1,7 @@
 package com.example.ecommerce.dtos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class CadastroCepDTO {
 
 	private String cep;
@@ -9,7 +11,7 @@ public class CadastroCepDTO {
 	private String bairro;
 
 	private String cidade;
-
+	
 	private Integer numero;
 
 	private String complemento;

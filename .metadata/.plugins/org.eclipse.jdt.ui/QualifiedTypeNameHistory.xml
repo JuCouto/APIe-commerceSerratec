@@ -7,11 +7,14 @@
     <fullyQualifiedTypeName name="java.net.http.HttpHeaders"/>
     <fullyQualifiedTypeName name="org.springframework.validation.ObjectError"/>
     <fullyQualifiedTypeName name="javax.validation.ConstraintViolationException"/>
-    <fullyQualifiedTypeName name="com.example.ecommerce.exceptions.NoSuchElementFoundException"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.MethodArgumentNotValidException"/>
     <fullyQualifiedTypeName name="java.util.NoSuchElementException"/>
     <fullyQualifiedTypeName name="javax.persistence.OneToMany"/>
     <fullyQualifiedTypeName name="com.example.ecommerce.dtos.ClienteDTO"/>
     <fullyQualifiedTypeName name="com.example.ecommerce.dtos.PedidoDTO"/>
     <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="com.fasterxml.jackson.annotation.JsonIgnore"/>
+    <fullyQualifiedTypeName name="ch.qos.logback.core.pattern.Converter"/>
+    <fullyQualifiedTypeName name="com.example.ecommerce.dtos.CadastroCepDTO"/>
+    <fullyQualifiedTypeName name="com.example.ecommerce.exceptions.NoSuchElementFoundException"/>
 </qualifiedTypeNameHistroy>

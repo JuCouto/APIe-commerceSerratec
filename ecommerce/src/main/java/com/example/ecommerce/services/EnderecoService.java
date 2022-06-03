@@ -65,28 +65,23 @@ public class EnderecoService {
 		enderecoRepository.deleteById(id);
 	}
 
-	
-	  public Endereco consultarCep(String cep) { RestTemplate restTemplate = new
-	  RestTemplate(); Endereco endereco =
-	  restTemplate.getForObject("https://viacep.com.br/ws/"+ cep + "/json/" , Endereco.class);
-	  return endereco;
-	  
-	  }
-	 
-	/*public CadastroCepDTO consultarDadosPorCep(String cep) {
-		RestTemplate rt = new RestTemplate();
-		String uri = "viacep.com.br/ws/{cep}/json/";
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("cep", cep);
-		CadastroCepDTO ccd = rt.getForObject(uri, CadastroCepDTO.class, params);
+	public Endereco consultarCep(String cep) {
+		RestTemplate restTemplate = new RestTemplate();
+		Endereco endereco = restTemplate.getForObject("https://viacep.com.br/ws/" + cep + "/json/", Endereco.class);
+		return endereco;
 
-		return ccd;
 	}
 
-	public Endereco enderecoCep(String cep) {
-		CadastroCepDTO cert = consultarDadosPorCep(cep);
-		Endereco endereco = new Endereco();
-		BeanUtils.copyProperties(cert, endereco);
-		return endereco;
-	}*/
+	
+	  public CadastroCepDTO consultarDadosPorCep(String cep) { RestTemplate rt =
+	  new RestTemplate(); String uri = "viacep.com.br/ws/{cep}/json/"; Map<String,
+	  String> params = new HashMap<String, String>(); params.put("cep", cep);
+	  CadastroCepDTO ccd = rt.getForObject(uri, CadastroCepDTO.class, params);
+	  
+	  return ccd; }
+	  
+	 /* public Endereco enderecoCep(String cep) { CadastroCepDTO cert =
+	  consultarDadosPorCep(cep); Endereco endereco = new Endereco();
+	  BeanUtils.copyProperties(cert, endereco); return endereco; */
+	 
 }
