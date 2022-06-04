@@ -8,6 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -25,16 +28,21 @@ public class Cliente {
 	@Column(name = "id_cliente")
 	private Integer idCliente;
 	
+	@Email(message = "E-mail inválido")
+	@NotBlank(message="E-mail não pode estar em branco.")
 	@Column(name = "email")
 	private String emailCliente;
 	
 	@Column(name = "nome_completo")
+	@NotBlank(message= "O nome não pode estar em branco")
 	private String nomeCliente;
 	
-	@CPF
+	@CPF(message = "CPF inválido.")
+	@NotBlank(message="CPF não pode estar vazio.")
 	@Column(name = "cpf")
 	private String cpfCliente;
 	
+	@Size(min=11, max=15, message="O telefone deve ter entre 11 e 15 caracteres.")
 	@Column(name = "telefone")
 	private String telefoneCliente;
 	

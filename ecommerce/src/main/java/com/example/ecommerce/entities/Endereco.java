@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import com.example.ecommerce.dtos.EnderecoDTO;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -25,6 +26,7 @@ public class Endereco {
 	@Column(name = "id_endereco")
 	private Integer idEndereco;
 
+	@NotBlank(message="Insira um CEP")
 	@Column(name = "cep")
 	private String cep;
 

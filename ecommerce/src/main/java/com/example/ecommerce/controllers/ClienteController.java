@@ -57,7 +57,7 @@ public class ClienteController {
 	}
 
 	@PutMapping("/dto")
-	public ResponseEntity<ClienteDTO> updateClienteDTO(@RequestBody ClienteDTO clienteDTO) {
+	public ResponseEntity<ClienteDTO> updateClienteDTO(@Valid @RequestBody ClienteDTO clienteDTO) {
 		ClienteDTO novoClienteDTO = clienteService.updateClienteDTO(clienteDTO);
 		return new ResponseEntity<>(novoClienteDTO, HttpStatus.OK);
 	}

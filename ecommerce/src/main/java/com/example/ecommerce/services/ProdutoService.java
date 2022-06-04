@@ -11,6 +11,7 @@ import com.example.ecommerce.dtos.CategoriaDTO;
 import com.example.ecommerce.dtos.ProdutoDTO;
 import com.example.ecommerce.entities.Categoria;
 import com.example.ecommerce.entities.Produto;
+import com.example.ecommerce.exceptions.NoSuchElementFoundException;
 import com.example.ecommerce.repositories.ProdutoRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -51,10 +52,12 @@ public class ProdutoService {
 	}
 
 	public ProdutoDTO saveProdutoDTO(ProdutoDTO produtoDTO) {
+		validarDescricao(produtoDTO.getDescricaoProduto());
 		Produto produto = converterDTOParaEntidade(produtoDTO);
 		Produto novoProduto = produtoRepository.save(produto);
 		return converterEntidadeParaDTO(novoProduto);
 	}
+
 	public ProdutoDTO updateProdutoDTO(ProdutoDTO produtoDTO) {
 		Produto produto = converterDTOParaEntidade(produtoDTO);
 		Produto novoProduto = produtoRepository.save(produto);
@@ -63,14 +66,17 @@ public class ProdutoService {
 
 	public Produto saveProdutoComFoto(String produtoString, MultipartFile file) throws Exception {
 		Produto produtoConvertido = new Produto();
+		
 		try {
 			ObjectMapper objMapper = new ObjectMapper();
 			produtoConvertido = objMapper.readValue(produtoString, Produto.class);
 		} catch (IOException e) {
 			System.out.println("Ocorreu um erro ao salvar imagem");
 		}
+		validarDescricao(produtoConvertido.getDescricaoProduto());
 		Produto produtoBD = produtoRepository.save(produtoConvertido);
 		produtoBD.setImagemProduto(produtoBD.getIdProduto() + "_" + file.getOriginalFilename());
+		
 		Produto produtoAtualizado = produtoRepository.save(produtoBD);
 		try {
 			arquivoService.criarArquivo(produtoBD.getIdProduto() + "_" + file.getOriginalFilename(), file);
@@ -81,7 +87,7 @@ public class ProdutoService {
 
 		String corpoEmail = "Foi cadastrado uma nova categoria " + produtoAtualizado.toString();
 		mailService.enviarEmailTexto("teste@teste.com", "cadastroProduto", corpoEmail);
-
+		
 		return produtoAtualizado;
 	}
 
@@ -93,7 +99,7 @@ public class ProdutoService {
 		} catch (IOException e) {
 			System.out.println("Ocorreu um erro ao salvar imagem");
 		}
-
+		validarDescricao(produtoConvertidoDTO.getDescricaoProduto());
 		Produto produto = converterDTOParaEntidade(produtoConvertidoDTO);
 		Produto produtoBD = produtoRepository.save(produto);
 		produtoBD.setImagemProduto(produtoBD.getIdProduto() + "_" + file.getOriginalFilename());
@@ -108,7 +114,7 @@ public class ProdutoService {
 
 		String corpoEmail = "Foi cadastrado uma nova categoria " + produtoConvertidoDTO.toString();
 		mailService.enviarEmailTexto("teste@teste.com", "cadastroProduto", corpoEmail);
-
+		
 		return converterEntidadeParaDTO(produtoAtualizado);
 	}
 
@@ -146,5 +152,12 @@ public class ProdutoService {
 		produto.setCategoria(categoria);
 
 		return produto;
+	}
+
+	public void validarDescricao(String descricaoProduto) {
+		var produto = produtoRepository.findByDescricaoProduto(descricaoProduto);
+		if (produto.isPresent()) {
+			throw new NoSuchElementFoundException("Já existe um produto com essa descrição.");
+		}
 	}
 }
