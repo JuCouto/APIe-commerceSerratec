@@ -1,7 +1,7 @@
 package com.example.ecommerce.dtos;
 
 public class ItemPedidoDTO {
-	
+
 	private Integer idItemPedido;
 
 	private Integer qtdItemPedido;
@@ -14,9 +14,9 @@ public class ItemPedidoDTO {
 
 	private Double valorLiquido;
 
-	private PedidoDTO pedido;
+	private PedidoDTO pedidoDTO;
 
-	private ProdutoDTO produto;
+	private ProdutoDTO produtoDTO;
 
 	public Integer getIdItemPedido() {
 		return idItemPedido;
@@ -66,21 +66,20 @@ public class ItemPedidoDTO {
 		this.valorLiquido = valorLiquido;
 	}
 
-	public PedidoDTO getPedido() {
-		return pedido;
+	public PedidoDTO getPedidoDTO() {
+		return pedidoDTO;
 	}
 
-	public void setPedido(PedidoDTO pedido) {
-		this.pedido = pedido;
+	public void setPedidoDTO(PedidoDTO pedidoDTO) {
+		this.pedidoDTO = pedidoDTO;
 	}
 
-	public ProdutoDTO getProduto() {
-		return produto;
+	public ProdutoDTO getProdutoDTO() {
+		return produtoDTO;
 	}
 
-	public void setProduto(ProdutoDTO produto) {
-		this.produto = produto;
+	public void setProdutoDTO(ProdutoDTO produtoDTO) {
+		this.produtoDTO = produtoDTO;
 	}
-	
-	
+
 }

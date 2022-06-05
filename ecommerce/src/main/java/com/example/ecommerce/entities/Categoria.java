@@ -16,23 +16,22 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "categoria")
-@JsonIdentityInfo(scope = Categoria.class, generator = ObjectIdGenerators.PropertyGenerator.class, 
-property = "idCategoria")
+@JsonIdentityInfo(scope = Categoria.class, generator = ObjectIdGenerators.PropertyGenerator.class, property = "idCategoria")
 public class Categoria {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_categoria")
 	private Integer idCategoria;
-	
+
 	@Column(name = "nome")
 	private String nomeCategoria;
-	
+
 	@Column(name = "descricao")
 	private String descricaoCategoria;
-	
+
 	@JsonIgnore
-	@OneToMany (mappedBy = "categoria")
+	@OneToMany(mappedBy = "categoria")
 	private List<Produto> produtoList;
 
 	public Integer getIdCategoria() {
@@ -72,7 +71,5 @@ public class Categoria {
 		return "Categoria [idCategoria=" + idCategoria + ", nomeCategoria=" + nomeCategoria + ", descricaoCategoria="
 				+ descricaoCategoria + ", produtoList=" + produtoList + "]";
 	}
-	
-	
-	
+
 }

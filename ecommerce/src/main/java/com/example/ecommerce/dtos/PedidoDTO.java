@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 public class PedidoDTO {
-	
+
 	private Integer idPedido;
 
 	private Date dataPedido;
@@ -14,23 +14,12 @@ public class PedidoDTO {
 	private Date dataEnvio;
 
 	private Boolean statusPedido;
-	
+
 	private Double total;
 
+	private ClienteDTO clienteDTO;
+
 	private List<ItemPedidoDTO> itemPedidoDTO;
-
-	public PedidoDTO() {
-		super();
-	}
-
-	public PedidoDTO(Integer idPedido, Date dataPedido, Date dataEntrega, Date dataEnvio, Boolean statusPedido) {
-		super();
-		this.idPedido = idPedido;
-		this.dataPedido = dataPedido;
-		this.dataEntrega = dataEntrega;
-		this.dataEnvio = dataEnvio;
-		this.statusPedido = statusPedido;
-	}
 
 	public Integer getIdPedido() {
 		return idPedido;
@@ -80,12 +69,25 @@ public class PedidoDTO {
 		this.itemPedidoDTO = itemPedidoDTO;
 	}
 
-	public Double getTotal() {
-		return total;
+	public ClienteDTO getClienteDTO() {
+		return clienteDTO;
+	}
+
+	public void setClienteDTO(ClienteDTO clienteDTO) {
+		this.clienteDTO = clienteDTO;
 	}
 
 	public void setTotal(Double total) {
 		this.total = total;
 	}
 
+	public Double getTotal() {
+		Double soma = 0.0;
+		List<ItemPedidoDTO> itemPedidos = getItemPedidoDTO();
+		for (ItemPedidoDTO op : itemPedidos) {
+			soma += op.getValorLiquido();
+		}
+		total = soma;
+		return total;
+	}
 }

@@ -27,9 +27,6 @@ public class ProdutoService {
 	@Autowired
 	ArquivoService arquivoService;
 
-	@Autowired
-	MailService mailService;
-
 	public List<Produto> findAllProduto() {
 		return produtoRepository.findAll();
 	}
@@ -47,10 +44,6 @@ public class ProdutoService {
 		return produtoDTO;
 	}
 
-	public Produto saveProduto(Produto produto) {
-		return produtoRepository.save(produto);
-	}
-
 	public ProdutoDTO saveProdutoDTO(ProdutoDTO produtoDTO) {
 		validarDescricao(produtoDTO.getDescricaoProduto());
 		Produto produto = converterDTOParaEntidade(produtoDTO);
@@ -62,33 +55,6 @@ public class ProdutoService {
 		Produto produto = converterDTOParaEntidade(produtoDTO);
 		Produto novoProduto = produtoRepository.save(produto);
 		return converterEntidadeParaDTO(novoProduto);
-	}
-
-	public Produto saveProdutoComFoto(String produtoString, MultipartFile file) throws Exception {
-		Produto produtoConvertido = new Produto();
-		
-		try {
-			ObjectMapper objMapper = new ObjectMapper();
-			produtoConvertido = objMapper.readValue(produtoString, Produto.class);
-		} catch (IOException e) {
-			System.out.println("Ocorreu um erro ao salvar imagem");
-		}
-		validarDescricao(produtoConvertido.getDescricaoProduto());
-		Produto produtoBD = produtoRepository.save(produtoConvertido);
-		produtoBD.setImagemProduto(produtoBD.getIdProduto() + "_" + file.getOriginalFilename());
-		
-		Produto produtoAtualizado = produtoRepository.save(produtoBD);
-		try {
-			arquivoService.criarArquivo(produtoBD.getIdProduto() + "_" + file.getOriginalFilename(), file);
-
-		} catch (Exception e) {
-			throw new Exception("Não foi possível mover o arquivo.-" + e.getStackTrace());
-		}
-
-		String corpoEmail = "Foi cadastrado uma nova categoria " + produtoAtualizado.toString();
-		mailService.enviarEmailTexto("teste@teste.com", "cadastroProduto", corpoEmail);
-		
-		return produtoAtualizado;
 	}
 
 	public ProdutoDTO saveProdutoComFotoDTO(String produtoStringDTO, MultipartFile file) throws Exception {
@@ -112,9 +78,6 @@ public class ProdutoService {
 
 		}
 
-		String corpoEmail = "Foi cadastrado uma nova categoria " + produtoConvertidoDTO.toString();
-		mailService.enviarEmailTexto("teste@teste.com", "cadastroProduto", corpoEmail);
-		
 		return converterEntidadeParaDTO(produtoAtualizado);
 	}
 
@@ -128,6 +91,7 @@ public class ProdutoService {
 
 	public ProdutoDTO converterEntidadeParaDTO(Produto produto) {
 		ProdutoDTO produtoDTO = new ProdutoDTO();
+		produtoDTO.setIdProduto(produto.getIdProduto());
 		produtoDTO.setDescricaoProduto(produto.getDescricaoProduto());
 		produtoDTO.setDataCadastro(produto.getDataCadastro());
 		produtoDTO.setImagemProduto(produto.getImagemProduto());
@@ -142,6 +106,7 @@ public class ProdutoService {
 
 	public Produto converterDTOParaEntidade(ProdutoDTO produtoDTO) {
 		Produto produto = new Produto();
+		produto.setIdProduto(produtoDTO.getIdProduto());
 		produto.setDescricaoProduto(produtoDTO.getDescricaoProduto());
 		produto.setDataCadastro(produtoDTO.getDataCadastro());
 		produto.setImagemProduto(produtoDTO.getImagemProduto());

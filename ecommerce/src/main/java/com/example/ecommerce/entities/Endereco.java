@@ -26,7 +26,7 @@ public class Endereco {
 	@Column(name = "id_endereco")
 	private Integer idEndereco;
 
-	@NotBlank(message="Insira um CEP")
+	@NotBlank(message = "Insira um CEP")
 	@Column(name = "cep")
 	private String cep;
 

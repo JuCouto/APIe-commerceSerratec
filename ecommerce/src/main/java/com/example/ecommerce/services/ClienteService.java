@@ -5,12 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.ecommerce.dtos.CadastroCepDTO;
 import com.example.ecommerce.dtos.ClienteDTO;
 import com.example.ecommerce.dtos.EnderecoDTO;
 import com.example.ecommerce.entities.Cliente;
 import com.example.ecommerce.entities.Endereco;
-import com.example.ecommerce.exceptions.NoSuchElementFoundException;
+import com.example.ecommerce.exceptions.InvalidCpfException;
+import com.example.ecommerce.exceptions.InvalidEmailException;
 import com.example.ecommerce.repositories.ClienteRepository;
 
 @Service
@@ -46,21 +46,14 @@ public class ClienteService {
 	public ClienteDTO saveClienteDTO(ClienteDTO clienteDTO) {
 		validarCPF(clienteDTO.getCpfCliente());
 		validarEmail(clienteDTO.getEmailCliente());
-		CadastroCepDTO cepDTO = enderecoService.consultarDadosPorCep(clienteDTO.getEnderecoDTO().getCep());
-		EnderecoDTO enderecoDTO = new EnderecoDTO();
-		enderecoDTO.setBairro(cepDTO.getBairro());
-		enderecoDTO.setCep(clienteDTO.getEnderecoDTO().getCep());
-		enderecoDTO.setCidade(cepDTO.getCidade());
-		enderecoDTO.setComplemento(cepDTO.getComplemento());
-		enderecoDTO.setRua(cepDTO.getRua());
-		enderecoDTO.setUf(cepDTO.getUf());
-		enderecoDTO.setNumero(clienteDTO.getEnderecoDTO().getNumero());
-		clienteDTO.setEndereco(enderecoDTO);
+		Endereco endereco = enderecoService.consultarCep(clienteDTO.getEnderecoDTO().getCep());
+		endereco.setNumero(clienteDTO.getEnderecoDTO().getNumero());
+		Endereco saveEndereco = enderecoService.saveEndereco(endereco);
+		clienteDTO.setEnderecoDTO(saveEndereco.converterEntidadeParaDTO());
 		Cliente cliente = converterDTOParaEntidade(clienteDTO);
 		
 		Cliente novoCliente = clienteRepository.save(cliente);
 		
-
 		return converterEntidadeParaDTO(novoCliente);
 	}
 
@@ -87,7 +80,7 @@ public class ClienteService {
 		clienteDTO.setNomeCliente(cliente.getNomeCliente());
 		clienteDTO.setTelefoneCliente(cliente.getTelefoneCliente());
 		EnderecoDTO enderecoDTO = enderecoService.findEnderecoDTOById(cliente.getEndereco().getIdEndereco());
-		clienteDTO.setEndereco(enderecoDTO);
+		clienteDTO.setEnderecoDTO(enderecoDTO);
 
 		return clienteDTO;
 	}
@@ -101,10 +94,7 @@ public class ClienteService {
 		cliente.setTelefoneCliente(clienteDTO.getTelefoneCliente());
 		Endereco enderecoNovo= new Endereco();
 		enderecoNovo.converterEntidadeParaDTO();
-		//cliente.setEndereco(enderecoNovo.getCep());
-		
-		//Endereco endereco = enderecoService.findEnderecoById(clienteDTO.getEnderecoDTO().getIdEndereco());
-		//cliente.setEndereco(endereco);
+		cliente.setEndereco(clienteDTO.getEnderecoDTO().converterDTOParaEntidade());
 
 		return cliente;
 	}
@@ -112,14 +102,14 @@ public class ClienteService {
 	private void validarCPF(String cpf) {
 		var cliente = clienteRepository.findByCpfCliente(cpf);
 		if (cliente.isPresent()) {
-			throw new NoSuchElementFoundException("Esse cpf já existe no bando de dados");
+			throw new InvalidCpfException("Esse cpf já existe no bando de dados");
 		}
 	}
 	
 	private void validarEmail(String email) {
 		var cliente = clienteRepository.findByEmailCliente(email);
 		if (cliente.isPresent()) {
-			throw new NoSuchElementFoundException("Esse E-mail já existe no bando de dados");
+			throw new InvalidEmailException("Esse E-mail já existe no bando de dados");
 		}
 	}
 }

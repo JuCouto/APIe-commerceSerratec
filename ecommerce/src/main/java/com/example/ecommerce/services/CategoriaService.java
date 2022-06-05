@@ -66,21 +66,20 @@ public class CategoriaService {
 	}
 
 	public CategoriaDTO converterEntidadeParaDTO(Categoria categoria) {
-		CategoriaDTO categoriaDTO = new CategoriaDTO();
-		categoriaDTO.setIdCategoria(categoria.getIdCategoria());
-		categoriaDTO.setDescricaoCategoria(categoria.getDescricaoCategoria());
-		categoriaDTO.setNomeCategoria(categoria.getNomeCategoria());
+        CategoriaDTO categoriaDTO = new CategoriaDTO();
+        categoriaDTO.setIdCategoria(categoria.getIdCategoria());
+        categoriaDTO.setDescricaoCategoria(categoria.getDescricaoCategoria());
+        categoriaDTO.setNomeCategoria(categoria.getNomeCategoria());
 
-		return categoriaDTO;
-	}
+        return categoriaDTO;
+    }
 
-	public Categoria converterDTOParaEntidade(CategoriaDTO categoriaDTO) {
-		Categoria categoria = new Categoria();
-		categoria.setIdCategoria(categoriaDTO.getIdCategoria());
-		categoria.setDescricaoCategoria(categoriaDTO.getDescricaoCategoria());
-		categoria.setNomeCategoria(categoriaDTO.getNomeCategoria());
+    public Categoria converterDTOParaEntidade(CategoriaDTO categoriaDTO) {
+        Categoria categoria = new Categoria();
+        categoria.setIdCategoria(categoriaDTO.getIdCategoria());
+        categoria.setDescricaoCategoria(categoriaDTO.getDescricaoCategoria());
+        categoria.setNomeCategoria(categoriaDTO.getNomeCategoria());
 
-		return categoria;
-	}
-
+        return categoria;
+    }
 }

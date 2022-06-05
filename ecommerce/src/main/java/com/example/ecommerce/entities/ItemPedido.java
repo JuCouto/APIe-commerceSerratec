@@ -14,38 +14,37 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "item_pedido")
-@JsonIdentityInfo(scope = ItemPedido.class, generator = ObjectIdGenerators.PropertyGenerator.class, 
-property = "idItemPedido")
+@JsonIdentityInfo(scope = ItemPedido.class, generator = ObjectIdGenerators.PropertyGenerator.class, property = "idItemPedido")
 public class ItemPedido {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_item_pedido")
 	private Integer idItemPedido;
-	
+
 	@Column(name = "quantidade")
 	private Integer qtdItemPedido;
-	
+
 	@Column(name = "preco_venda")
 	private Double precoVenda;
-	
+
 	@Column(name = "percentual_desconto")
 	private Double percentualDesconto;
-	
+
 	@Column(name = "valor_bruto")
 	private Double valorBruto;
-	
+
 	@Column(name = "valor_liquido")
 	private Double valorLiquido;
-	
+
 	@ManyToOne
-    @JoinColumn(name = "id_pedido", referencedColumnName = "id_pedido")
-    private Pedido pedido;
-	
+	@JoinColumn(name = "id_pedido", referencedColumnName = "id_pedido")
+	private Pedido pedido;
+
 	@ManyToOne
-    @JoinColumn(name = "id_produto", referencedColumnName = "id_produto")
-    private Produto produto;
-	
+	@JoinColumn(name = "id_produto", referencedColumnName = "id_produto")
+	private Produto produto;
+
 	public Integer getIdItemPedido() {
 		return idItemPedido;
 	}
@@ -116,6 +115,5 @@ public class ItemPedido {
 				+ precoVenda + ", percentualDesconto=" + percentualDesconto + ", valorBruto=" + valorBruto
 				+ ", valorLiquido=" + valorLiquido + ", pedido=" + pedido + ", produto=" + produto + "]";
 	}
-	
-	
+
 }

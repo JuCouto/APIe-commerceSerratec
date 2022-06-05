@@ -30,15 +30,15 @@ public class EnderecoController {
 	public ResponseEntity<List<Endereco>> findAllEndereco() {
 		List<Endereco> enderecoList = enderecoService.findAllEndereco();
 		if (enderecoList.isEmpty()) {
-			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+			throw new EmptyListException("A lista de endereço está vazia");
 		} else {
 			return new ResponseEntity<>(enderecoList, HttpStatus.OK);
 		}
 	}
 
 	@GetMapping("/{cep}")
-	public ResponseEntity<CadastroCepDTO> consultarDadosPorCep(String cep) {
-		CadastroCepDTO cadastroCepDTO = enderecoService.consultarDadosPorCep(cep);
+	public ResponseEntity<EnderecoDTO> consultarDadosPorCep(String cep) {
+		EnderecoDTO cadastroCepDTO = enderecoService.consultarCep(cep).converterEntidadeParaDTO();
 		if (cadastroCepDTO == null) {
 			throw new NoSuchElementFoundException("Não foram encontrados esses dados por CEP");
 		} else {
@@ -61,12 +61,6 @@ public class EnderecoController {
 	public ResponseEntity<EnderecoDTO> saveEnderecoDTO(@RequestBody EnderecoDTO enderecoDTO) {
 		EnderecoDTO novoEnderecoDTO = enderecoService.saveEnderecoDTO(enderecoDTO);
 		return new ResponseEntity<>(novoEnderecoDTO, HttpStatus.CREATED);
-	}
-
-	@PostMapping("/{cep}")
-	public ResponseEntity<Endereco> saveEnderecoCep(@PathVariable String cep) {
-		Endereco novoEndereco = enderecoService.saveEnderecoCep(cep);
-		return new ResponseEntity<>(novoEndereco, HttpStatus.CREATED);
 	}
 
 	@PutMapping("/dto")

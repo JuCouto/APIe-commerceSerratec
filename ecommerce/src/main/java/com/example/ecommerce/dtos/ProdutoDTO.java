@@ -87,8 +87,8 @@ public class ProdutoDTO {
 	public String toString() {
 		return "ProdutoDTO [idProduto=" + idProduto + ", nomeProduto=" + nomeProduto + ", descricaoProduto="
 				+ descricaoProduto + ", qtdEstoque=" + qtdEstoque + ", dataCadastro=" + dataCadastro
-				+ ", valorUnitario=" + valorUnitario + ", imagemProduto=" + imagemProduto + ", categoriaDTO="
-				+ categoriaDTO + "]";
+				+ ", imagemProduto=" + imagemProduto + ", categoriaDTO=" + categoriaDTO + "]";
 	}
+
 
 }
