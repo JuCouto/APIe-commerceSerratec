@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ecommerce.dtos.ClienteDTO;
 import com.example.ecommerce.entities.Cliente;
+import com.example.ecommerce.exceptions.EmptyListException;
+import com.example.ecommerce.exceptions.NoSuchElementFoundException;
 import com.example.ecommerce.services.ClienteService;
 
 @RestController
@@ -33,7 +35,7 @@ public class ClienteController {
 	public ResponseEntity<List<Cliente>> findAllCliente() {
 		List<Cliente> clienteList = clienteService.findAllClientes();
 		if (clienteList.isEmpty()) {
-			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+			throw new EmptyListException("A lista de cliente está vazia.");
 		} else {
 			return new ResponseEntity<>(clienteList, HttpStatus.OK);
 		}
@@ -43,7 +45,7 @@ public class ClienteController {
 	public ResponseEntity<ClienteDTO> findClienteDTOById(@PathVariable Integer id) {
 		ClienteDTO clienteDTO = clienteService.findClienteDTOById(id);
 		if (clienteDTO == null) {
-			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+			throw new NoSuchElementFoundException("Não existe nenhum cliente com o ID: " + id + ".");
 		} else {
 			return new ResponseEntity<>(clienteDTO, HttpStatus.OK);
 		}
@@ -65,10 +67,10 @@ public class ClienteController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteCliente(@PathVariable Integer id) {
 		if (clienteService.findClienteById(id) == null) {
-			return new ResponseEntity<>("Esse cliente não foi encontrado", HttpStatus.NO_CONTENT);
+			throw new NoSuchElementFoundException("O cliente com o ID: " + id + " não existe.");
 		} else {
 			clienteService.deleteCliente(id);
-			return new ResponseEntity<>("Cliente deletado com sucesso", HttpStatus.OK);
+			return new ResponseEntity<>("Cliente deletado com sucesso.", HttpStatus.OK);
 		}
 	}
 }

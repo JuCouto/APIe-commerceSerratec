@@ -11,7 +11,7 @@ import com.example.ecommerce.dtos.CategoriaDTO;
 import com.example.ecommerce.dtos.ProdutoDTO;
 import com.example.ecommerce.entities.Categoria;
 import com.example.ecommerce.entities.Produto;
-import com.example.ecommerce.exceptions.NoSuchElementFoundException;
+import com.example.ecommerce.exceptions.InvalidDescriptionException;
 import com.example.ecommerce.repositories.ProdutoRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -122,7 +122,7 @@ public class ProdutoService {
 	public void validarDescricao(String descricaoProduto) {
 		var produto = produtoRepository.findByDescricaoProduto(descricaoProduto);
 		if (produto.isPresent()) {
-			throw new NoSuchElementFoundException("Já existe um produto com essa descrição.");
+			throw new InvalidDescriptionException("Existe um produto com essa descrição.");
 		}
 	}
 }

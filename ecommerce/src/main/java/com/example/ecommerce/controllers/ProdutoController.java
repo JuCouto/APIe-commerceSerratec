@@ -22,6 +22,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.ecommerce.dtos.ProdutoDTO;
 import com.example.ecommerce.entities.Produto;
+import com.example.ecommerce.exceptions.EmptyListException;
+import com.example.ecommerce.exceptions.NoSuchElementFoundException;
 import com.example.ecommerce.services.ProdutoService;
 
 @RestController
@@ -35,7 +37,7 @@ public class ProdutoController {
 	public ResponseEntity<List<Produto>> findAllProduto() {
 		List<Produto> produtoList = produtoService.findAllProduto();
 		if (produtoList.isEmpty()) {
-			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+			throw new EmptyListException("A lista de produto está vazia.");
 		} else {
 			return new ResponseEntity<>(produtoList, HttpStatus.OK);
 		}
@@ -45,7 +47,7 @@ public class ProdutoController {
 	public ResponseEntity<ProdutoDTO> findProdutoDTOById(@PathVariable Integer id) {
 		ProdutoDTO produtoDTO = produtoService.findProdutoDTOById(id);
 		if (produtoDTO == null) {
-			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+			throw new NoSuchElementFoundException("Não existe nenhum produto com o ID: " + id + ".");
 		} else {
 			return new ResponseEntity<>(produtoDTO, HttpStatus.OK);
 		}
@@ -57,15 +59,15 @@ public class ProdutoController {
 		ProdutoDTO novoProdutoDTO = produtoService.saveProdutoDTO(produtoDTO);
 		return new ResponseEntity<>(novoProdutoDTO, HttpStatus.CREATED);
 	}
-	
-	@PostMapping(value="/dto/com-foto", consumes = {MediaType.APPLICATION_JSON_VALUE, 
-			MediaType.MULTIPART_FORM_DATA_VALUE})
-	public ResponseEntity<ProdutoDTO> saveProdutoDTO(@Valid @RequestPart("produtoDTO") String produtoDTO, 
-			@RequestPart("file") MultipartFile file) throws Exception{
-		ProdutoDTO novoProdutoDTO = produtoService.saveProdutoComFotoDTO(produtoDTO,file);
-		return new ResponseEntity<> (novoProdutoDTO, HttpStatus.CREATED);
+
+	@PostMapping(value = "/dto/com-foto", consumes = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.MULTIPART_FORM_DATA_VALUE })
+	public ResponseEntity<ProdutoDTO> saveProdutoDTO(@Valid @RequestPart("produtoDTO") String produtoDTO,
+			@RequestPart("file") MultipartFile file) throws Exception {
+		ProdutoDTO novoProdutoDTO = produtoService.saveProdutoComFotoDTO(produtoDTO, file);
+		return new ResponseEntity<>(novoProdutoDTO, HttpStatus.CREATED);
 	}
-	
+
 	@PutMapping("/dto")
 	public ResponseEntity<ProdutoDTO> updateProdutoDTO(@Valid @RequestBody ProdutoDTO produtoDTO) {
 		ProdutoDTO novoProdutoDTO = produtoService.updateProdutoDTO(produtoDTO);
@@ -75,7 +77,7 @@ public class ProdutoController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteProduto(@PathVariable Integer id) {
 		if (produtoService.findProdutoById(id) == null) {
-			return new ResponseEntity<>("Esse produto não foi encontrado", HttpStatus.NO_CONTENT);
+			throw new NoSuchElementFoundException("O produto com o ID: " + id + " não existe.");
 		} else {
 			produtoService.deleteProduto(id);
 			return new ResponseEntity<>("Produto deletado com sucesso", HttpStatus.OK);

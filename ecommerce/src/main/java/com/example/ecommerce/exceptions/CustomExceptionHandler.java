@@ -73,4 +73,45 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 		
 		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
 	}
+	
+	@ExceptionHandler(InvalidEmailException.class)
+		public final ResponseEntity<Object> handleInvalidEmailException(InvalidEmailException ex, WebRequest request){
+		List<String> details = new ArrayList<>();
+		details.add(ex.getLocalizedMessage());
+		HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+		ErrorResponse error = new ErrorResponse(httpStatus.value(), "Email inválido", details);
+		
+		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(InvalidCpfException.class)
+		public final ResponseEntity<Object> handleInvalidCpfException(InvalidCpfException ex, WebRequest request){
+		List<String> details = new ArrayList<>();
+		details.add(ex.getLocalizedMessage());
+		HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+		ErrorResponse error = new ErrorResponse(httpStatus.value(), "Cpf inválido", details);
+		
+		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(EmptyListException.class)
+		public final ResponseEntity<Object> handleEmptyListException(EmptyListException ex, WebRequest request){
+		List<String> details = new ArrayList<>();
+		details.add(ex.getLocalizedMessage());
+		HttpStatus httpStatus = HttpStatus.NO_CONTENT;
+		ErrorResponse error = new ErrorResponse(httpStatus.value(), "Lista vazia", details);
+		
+		return new ResponseEntity<>(error, HttpStatus.NO_CONTENT);
+	}
+	
+	@ExceptionHandler(InvalidDescriptionException.class)
+		public final ResponseEntity<Object> handleInvalidDescriptionException(InvalidDescriptionException ex, WebRequest request){
+		List<String> details = new ArrayList<>();
+		details.add(ex.getLocalizedMessage());
+		HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+		ErrorResponse error = new ErrorResponse(httpStatus.value(), "Descrição inválido", details);
+		
+		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+	}
+	
 }
