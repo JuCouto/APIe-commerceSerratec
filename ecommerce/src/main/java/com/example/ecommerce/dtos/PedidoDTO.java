@@ -9,13 +9,10 @@ public class PedidoDTO {
 
 	private Integer idPedido;
 
-	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataPedido;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataEntrega;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date dataEnvio;
 
 	private Boolean statusPedido;

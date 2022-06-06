@@ -3,7 +3,6 @@
     <fullyQualifiedTypeName name="com.fasterxml.jackson.annotation.JsonInclude"/>
     <fullyQualifiedTypeName name="com.fasterxml.jackson.annotation.JsonInclude.Include"/>
     <fullyQualifiedTypeName name="org.springframework.http.HttpStatus"/>
-    <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="java.net.http.HttpHeaders"/>
     <fullyQualifiedTypeName name="org.springframework.validation.ObjectError"/>
     <fullyQualifiedTypeName name="javax.validation.ConstraintViolationException"/>
@@ -17,4 +16,9 @@
     <fullyQualifiedTypeName name="ch.qos.logback.core.pattern.Converter"/>
     <fullyQualifiedTypeName name="com.example.ecommerce.dtos.CadastroCepDTO"/>
     <fullyQualifiedTypeName name="com.example.ecommerce.exceptions.NoSuchElementFoundException"/>
+    <fullyQualifiedTypeName name="com.example.ecommerce.dtos.ProdutoLimitadoDTO"/>
+    <fullyQualifiedTypeName name="com.example.ecommerce.entities.Produto"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="com.example.ecommerce.dtos.CategoriaListaProdutoDTO"/>
+    <fullyQualifiedTypeName name="com.fasterxml.jackson.annotation.JsonFormat"/>
 </qualifiedTypeNameHistroy>
