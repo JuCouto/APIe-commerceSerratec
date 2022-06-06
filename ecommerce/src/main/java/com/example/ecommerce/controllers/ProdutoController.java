@@ -67,6 +67,14 @@ public class ProdutoController {
 		ProdutoDTO novoProdutoDTO = produtoService.saveProdutoComFotoDTO(produtoDTO, file);
 		return new ResponseEntity<>(novoProdutoDTO, HttpStatus.CREATED);
 	}
+	
+	@PutMapping(value = "/dto/com-foto", consumes = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.MULTIPART_FORM_DATA_VALUE })
+	public ResponseEntity<ProdutoDTO> updateProdutoDTOComFoto (@Valid @RequestPart("produtoDTO") String produtoDTO,
+			@RequestPart("file") MultipartFile file) throws Exception {
+		ProdutoDTO novoProdutoDTO = produtoService.updateProdutoComFotoDTO(produtoDTO, file);
+		return new ResponseEntity<>(novoProdutoDTO, HttpStatus.CREATED);
+	}
 
 	@PutMapping("/dto")
 	public ResponseEntity<ProdutoDTO> updateProdutoDTO(@Valid @RequestBody ProdutoDTO produtoDTO) {

@@ -3,15 +3,20 @@ package com.example.ecommerce.dtos;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class PedidoDTO {
 
 	private Integer idPedido;
 
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataPedido;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataEntrega;
 
-	private Date dataEnvio;
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private Date dataEnvio;
 
 	private Boolean statusPedido;
 

@@ -1,7 +1,5 @@
 package com.example.ecommerce.dtos;
 
-import java.util.List;
-
 public class ClienteDTO {
 
 	private Integer idCliente;
@@ -14,7 +12,7 @@ public class ClienteDTO {
 
 	private String telefoneCliente;
 
-	private List<PedidoDTO> listaPedidoDTO;
+	//private List<PedidoDTO> listaPedidoDTO;
 	
 	private EnderecoDTO enderecoDTO;
 
@@ -58,27 +56,12 @@ public class ClienteDTO {
 		this.telefoneCliente = telefoneCliente;
 	}
 
-	public List<PedidoDTO> getListaPedidoDTO() {
-		return listaPedidoDTO;
-	}
-
-	public void setListaPedidoDTO(List<PedidoDTO> listaPedidoDTO) {
-		this.listaPedidoDTO = listaPedidoDTO;
-	}
-
 	public EnderecoDTO getEnderecoDTO() {
 		return enderecoDTO;
 	}
 
 	public void setEnderecoDTO(EnderecoDTO enderecoDTO) {
 		this.enderecoDTO = enderecoDTO;
-	}
-
-	@Override
-	public String toString() {
-		return "ClienteDTO [idCliente=" + idCliente + ", emailCliente=" + emailCliente + ", nomeCliente=" + nomeCliente
-				+ ", cpfCliente=" + cpfCliente + ", telefoneCliente=" + telefoneCliente + ", listaPedidoDTO="
-				+ listaPedidoDTO + ", enderecoDTO=" + enderecoDTO + "]";
 	}
 
 }

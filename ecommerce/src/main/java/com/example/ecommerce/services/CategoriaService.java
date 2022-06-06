@@ -1,12 +1,16 @@
 package com.example.ecommerce.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.ecommerce.dtos.CategoriaDTO;
+import com.example.ecommerce.dtos.CategoriaListaProdutoDTO;
+import com.example.ecommerce.dtos.ProdutoLimitadoDTO;
 import com.example.ecommerce.entities.Categoria;
+import com.example.ecommerce.entities.Produto;
 import com.example.ecommerce.repositories.CategoriaRepository;
 
 @Service
@@ -38,6 +42,16 @@ public class CategoriaService {
 		}
 		return null;
 	}
+	
+	public CategoriaListaProdutoDTO findCategoriaListaProdutoDTOById(Integer id) {
+		Categoria categoria = categoriaRepository.findById(id).isPresent() ? categoriaRepository.findById(id).get() : null;
+		CategoriaListaProdutoDTO categoriaListaProdutoDTO = new CategoriaListaProdutoDTO();
+		if (categoria != null) {
+			categoriaListaProdutoDTO = converterEntidadeParaDTOListProduto(categoria);
+			return categoriaListaProdutoDTO;
+		}
+		return null;
+	}
 
 	public Categoria saveCategoria(Categoria categoria) {
 		return categoriaRepository.save(categoria);
@@ -48,10 +62,6 @@ public class CategoriaService {
 		Categoria novaCategoria = categoriaRepository.save(categoria);
 
 		return converterEntidadeParaDTO(novaCategoria);
-	}
-
-	public Categoria updateCategoria(Categoria categoria) {
-		return categoriaRepository.save(categoria);
 	}
 
 	public CategoriaDTO updateCategoriaDTO(CategoriaDTO categoriaDTO) {
@@ -82,4 +92,26 @@ public class CategoriaService {
 
         return categoria;
     }
+    
+    public CategoriaListaProdutoDTO converterEntidadeParaDTOListProduto(Categoria categoria) {
+    	CategoriaListaProdutoDTO categoriaListaProdutoDTO = new CategoriaListaProdutoDTO();
+    	categoriaListaProdutoDTO.setNomeCategoria(categoria.getNomeCategoria());
+    	
+    	List<ProdutoLimitadoDTO> listaProdutoDTO = new ArrayList<>();
+		if (categoriaListaProdutoDTO.getProdutoList() == null) {
+
+			for (Produto produto : categoria.getProdutoList()) {
+				ProdutoLimitadoDTO produtoDTO = new ProdutoLimitadoDTO();
+				produtoDTO.setNomeProduto(produto.getNomeProduto());
+				produtoDTO.setDescricaoProduto(produto.getDescricaoProduto());
+				produtoDTO.setIdProduto(produto.getIdProduto());
+				produtoDTO.setQtdEstoque(produto.getQtdEstoque());
+				produtoDTO.setValorUnitario(produto.getValorUnitario());
+
+				listaProdutoDTO.add(produtoDTO);
+			}
+			categoriaListaProdutoDTO.setProdutoList(listaProdutoDTO);
+		}
+		return categoriaListaProdutoDTO;
+}
 }

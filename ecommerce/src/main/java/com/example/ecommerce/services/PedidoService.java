@@ -47,10 +47,11 @@ public class PedidoService {
 	public PedidoDTO findPedidoDTOById(Integer id) {
 		Pedido pedido = pedidoRepository.findById(id).isPresent() ? pedidoRepository.findById(id).get() : null;
 		PedidoDTO pedidoDTO = new PedidoDTO();
-		if (pedido != null) {
+		if (pedido != null && pedido.getListaItemPedido() != null) {
 			pedidoDTO = converterEntidadeParaDTO(pedido);
+			return pedidoDTO;
 		}
-		return pedidoDTO;
+		return null;
 	}
 
 	@Transactional
@@ -78,10 +79,6 @@ public class PedidoService {
 		Pedido pedido = converterDTOParaEntidade(pedidoDTO);
 		Pedido novoPedido = pedidoRepository.save(pedido);
 		return converterEntidadeParaDTO(novoPedido);
-	}
-
-	public Pedido updatePedido(Pedido pedido) {
-		return pedidoRepository.save(pedido);
 	}
 
 	public void deletePedido(Integer id) {
@@ -148,7 +145,5 @@ public class PedidoService {
 			pedido.setListaItemPedido(listaItemPedido);
 		}
 		return pedido;
-
 	}
-
 }

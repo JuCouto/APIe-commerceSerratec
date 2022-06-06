@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ecommerce.dtos.CategoriaDTO;
+import com.example.ecommerce.dtos.CategoriaListaProdutoDTO;
 import com.example.ecommerce.entities.Categoria;
 import com.example.ecommerce.exceptions.EmptyListException;
 import com.example.ecommerce.exceptions.NoSuchElementFoundException;
@@ -44,6 +45,17 @@ public class CategoriaController {
 	@GetMapping("/dto/{id}")
 	public ResponseEntity<CategoriaDTO> findCategoriaDTOById(@PathVariable Integer id) {
 		CategoriaDTO categoriaDTO = categoriaService.findCategoriaDTOById(id);
+		if (categoriaDTO == null) {
+			throw new NoSuchElementFoundException("Não existe nenhuma categoria com o ID: " + id + ".");
+		} else {
+			return new ResponseEntity<>(categoriaDTO, HttpStatus.OK);
+		}
+
+	}
+	
+	@GetMapping("/produto/dto/{id}")
+	public ResponseEntity<CategoriaListaProdutoDTO> findCategoriaListProdutoDTOById(@PathVariable Integer id) {
+		CategoriaListaProdutoDTO categoriaDTO = categoriaService.findCategoriaListaProdutoDTOById(id);
 		if (categoriaDTO == null) {
 			throw new NoSuchElementFoundException("Não existe nenhuma categoria com o ID: " + id + ".");
 		} else {

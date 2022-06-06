@@ -40,9 +40,11 @@ public class ProdutoService {
 		ProdutoDTO produtoDTO = new ProdutoDTO();
 		if (produto != null) {
 			produtoDTO = converterEntidadeParaDTO(produto);
+			return produtoDTO;
 		}
-		return produtoDTO;
+		return null;
 	}
+
 
 	public ProdutoDTO saveProdutoDTO(ProdutoDTO produtoDTO) {
 		validarDescricao(produtoDTO.getDescricaoProduto());
@@ -80,9 +82,28 @@ public class ProdutoService {
 
 		return converterEntidadeParaDTO(produtoAtualizado);
 	}
+	
+	public ProdutoDTO updateProdutoComFotoDTO(String produtoStringDTO, MultipartFile file) throws Exception {
+		ProdutoDTO produtoConvertidoDTO = new ProdutoDTO();
+		try {
+			ObjectMapper objMapper = new ObjectMapper();
+			produtoConvertidoDTO = objMapper.readValue(produtoStringDTO, ProdutoDTO.class);
+		} catch (IOException e) {
+			System.out.println("Ocorreu um erro ao salvar imagem");
+		}
+		validarDescricao(produtoConvertidoDTO.getDescricaoProduto());
+		Produto produto = converterDTOParaEntidade(produtoConvertidoDTO);
+		Produto produtoBD = produtoRepository.save(produto);
+		produtoBD.setImagemProduto(produtoBD.getIdProduto() + "_" + file.getOriginalFilename());
+		Produto produtoAtualizado = produtoRepository.save(produtoBD);
+		try {
+			arquivoService.criarArquivo(produtoBD.getIdProduto() + "_" + file.getOriginalFilename(), file);
 
-	public Produto updateProduto(Produto produto) {
-		return produtoRepository.save(produto);
+		} catch (Exception e) {
+			throw new Exception("Não foi possível mover o arquivo.-" + e.getStackTrace());
+
+		}
+		return converterEntidadeParaDTO(produtoAtualizado);
 	}
 
 	public void deleteProduto(Integer id) {

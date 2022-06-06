@@ -35,8 +35,9 @@ public class ClienteService {
 		ClienteDTO clienteDTO = new ClienteDTO();
 		if (cliente != null) {
 			clienteDTO = converterEntidadeParaDTO(cliente);
+			return clienteDTO;
 		}
-		return clienteDTO;
+		return null;
 	}
 
 	public Cliente saveCliente(Cliente cliente) {

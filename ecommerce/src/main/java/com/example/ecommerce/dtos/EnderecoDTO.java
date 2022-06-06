@@ -1,7 +1,5 @@
 package com.example.ecommerce.dtos;
 
-import java.util.List;
-
 import com.example.ecommerce.entities.Endereco;
 
 public class EnderecoDTO {
@@ -21,7 +19,7 @@ public class EnderecoDTO {
 
 	private String uf;
 
-	private List<ClienteDTO> clienteList;
+	//private List<ClienteDTO> clienteList;
 
 	public EnderecoDTO() {
 		super();
@@ -102,14 +100,6 @@ public class EnderecoDTO {
 
 	public void setUf(String uf) {
 		this.uf = uf;
-	}
-
-	public List<ClienteDTO> getClienteList() {
-		return clienteList;
-	}
-
-	public void setClienteList(List<ClienteDTO> clienteList) {
-		this.clienteList = clienteList;
 	}
 
 	public Endereco converterDTOParaEntidade() {

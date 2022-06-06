@@ -28,10 +28,10 @@ public class EnderecoService {
 		Endereco endereco = enderecoRepository.findById(id).isPresent() ? enderecoRepository.findById(id).get() : null;
 		EnderecoDTO enderecoDTO = new EnderecoDTO();
 		if (endereco != null) {
-
 			enderecoDTO = endereco.converterEntidadeParaDTO();
+			return enderecoDTO;
 		}
-		return enderecoDTO;
+		return null;
 	}
 
 	public Endereco saveEndereco(Endereco endereco) {
@@ -41,15 +41,6 @@ public class EnderecoService {
 	public EnderecoDTO saveEnderecoDTO(EnderecoDTO enderecoDTO) {
 		Endereco endereco = enderecoRepository.save(enderecoDTO.converterDTOParaEntidade());
 		return endereco.converterEntidadeParaDTO();
-	}
-
-	public Endereco updateEndereco(Endereco endereco) {
-		return enderecoRepository.save(endereco);
-	}
-
-	public Endereco saveEnderecoCep(String cep) {
-		Endereco novoEndereco = consultarCep(cep);
-		return enderecoRepository.save(novoEndereco);
 	}
 
 	public EnderecoDTO updateEnderecoDTO(EnderecoDTO enderecoDTO) {

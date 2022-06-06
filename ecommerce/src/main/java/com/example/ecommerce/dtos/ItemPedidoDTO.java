@@ -14,7 +14,7 @@ public class ItemPedidoDTO {
 
 	private Double valorLiquido;
 
-	private PedidoDTO pedidoDTO;
+	//private PedidoDTO pedidoDTO;
 
 	private ProdutoDTO produtoDTO;
 
@@ -64,14 +64,6 @@ public class ItemPedidoDTO {
 
 	public void setValorLiquido(Double valorLiquido) {
 		this.valorLiquido = valorLiquido;
-	}
-
-	public PedidoDTO getPedidoDTO() {
-		return pedidoDTO;
-	}
-
-	public void setPedidoDTO(PedidoDTO pedidoDTO) {
-		this.pedidoDTO = pedidoDTO;
 	}
 
 	public ProdutoDTO getProdutoDTO() {

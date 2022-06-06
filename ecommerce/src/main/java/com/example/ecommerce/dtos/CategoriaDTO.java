@@ -1,7 +1,5 @@
 package com.example.ecommerce.dtos;
 
-import java.util.List;
-
 public class CategoriaDTO {
 	
 	private Integer idCategoria;
@@ -10,7 +8,7 @@ public class CategoriaDTO {
 
 	private String descricaoCategoria;
 
-	private List<ProdutoDTO> produtoList;
+	//private List<ProdutoDTO> produtoList;
 
 	public Integer getIdCategoria() {
 		return idCategoria;
@@ -35,14 +33,4 @@ public class CategoriaDTO {
 	public void setDescricaoCategoria(String descricaoCategoria) {
 		this.descricaoCategoria = descricaoCategoria;
 	}
-
-	public List<ProdutoDTO> getProdutoList() {
-		return produtoList;
-	}
-
-	public void setProdutoList(List<ProdutoDTO> produtoList) {
-		this.produtoList = produtoList;
-	}
-	
-	
 }
