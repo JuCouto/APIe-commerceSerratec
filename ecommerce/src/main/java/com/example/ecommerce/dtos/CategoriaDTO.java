@@ -1,14 +1,14 @@
 package com.example.ecommerce.dtos;
 
 public class CategoriaDTO {
-	
+
 	private Integer idCategoria;
 
 	private String nomeCategoria;
 
 	private String descricaoCategoria;
 
-	//private List<ProdutoDTO> produtoList;
+	// private List<ProdutoDTO> produtoList;
 
 	public Integer getIdCategoria() {
 		return idCategoria;
@@ -33,4 +33,11 @@ public class CategoriaDTO {
 	public void setDescricaoCategoria(String descricaoCategoria) {
 		this.descricaoCategoria = descricaoCategoria;
 	}
+
+	@Override
+	public String toString() {
+		return "CategoriaDTO [idCategoria=" + idCategoria + ", nomeCategoria=" + nomeCategoria + ", descricaoCategoria="
+				+ descricaoCategoria + "]";
+	}
+
 }

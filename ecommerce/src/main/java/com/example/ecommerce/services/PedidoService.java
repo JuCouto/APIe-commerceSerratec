@@ -1,5 +1,7 @@
 package com.example.ecommerce.services;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,12 +68,16 @@ public class PedidoService {
 			itemPedido.setProduto(produto);
 
 		}
+
 		List<ItemPedido> novoPedido = itemPedidoService.saveListaItemPedido(listaItemPedido);
 
 		List<ItemPedidoDTO> converterEntidadeParaDTO = itemPedidoService.converterEntidadeParaDTO(novoPedido);
 		pedidoDTO.setItemPedidoDTO(converterEntidadeParaDTO);
 		pedidoDTO.setIdPedido(pedido.getIdPedido());
 		pedidoDTO.setClienteDTO(clienteService.findClienteDTOById(pedidoDTO.getClienteDTO().getIdCliente()));
+		pedidoDTO.setDataPedido(LocalDate.now());
+		String corpoEmail = "Foi cadastrada uma nova categoria" + pedidoDTO.toString();
+		mailService.enviarEmailTexto("teste@teste.com", "Cadastro de Categoria", corpoEmail);
 		return pedidoDTO;
 	}
 
@@ -121,7 +127,7 @@ public class PedidoService {
 		pedido.setIdPedido(pedidoDTO.getIdPedido());
 		pedido.setDataEntrega(pedidoDTO.getDataEntrega());
 		pedido.setDataEnvio(pedidoDTO.getDataEnvio());
-		pedido.setDataPedido(pedidoDTO.getDataPedido());
+		pedido.setDataPedido(LocalDate.now());
 		pedido.setStatusPedido(pedidoDTO.getStatusPedido());
 		Cliente cliente = clienteService.findClienteById(pedidoDTO.getClienteDTO().getIdCliente());
 		pedido.setCliente(cliente);

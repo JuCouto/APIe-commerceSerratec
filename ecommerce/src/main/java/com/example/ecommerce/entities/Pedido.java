@@ -1,6 +1,6 @@
 package com.example.ecommerce.entities;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -12,7 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.FutureOrPresent;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -26,14 +28,19 @@ public class Pedido {
 	@Column(name = "id_pedido")
 	private Integer idPedido;
 
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	@Column(name = "data_pedido")
-	private Date dataPedido;
+	private LocalDate dataPedido;
 
+	@FutureOrPresent
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	@Column(name = "data_entrega")
-	private Date dataEntrega;
+	private LocalDate dataEntrega;
 
+	@FutureOrPresent
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	@Column(name = "data_envio")
-	private Date dataEnvio;
+	private LocalDate dataEnvio;
 
 	@Column(name = "status")
 	private Boolean statusPedido;
@@ -61,27 +68,27 @@ public class Pedido {
 		this.idPedido = idPedido;
 	}
 
-	public Date getDataPedido() {
+	public LocalDate getDataPedido() {
 		return dataPedido;
 	}
 
-	public void setDataPedido(Date dataPedido) {
+	public void setDataPedido(LocalDate dataPedido) {
 		this.dataPedido = dataPedido;
 	}
 
-	public Date getDataEntrega() {
+	public LocalDate getDataEntrega() {
 		return dataEntrega;
 	}
 
-	public void setDataEntrega(Date dataEntrega) {
+	public void setDataEntrega(LocalDate dataEntrega) {
 		this.dataEntrega = dataEntrega;
 	}
 
-	public Date getDataEnvio() {
+	public LocalDate getDataEnvio() {
 		return dataEnvio;
 	}
 
-	public void setDataEnvio(Date dataEnvio) {
+	public void setDataEnvio(LocalDate dataEnvio) {
 		this.dataEnvio = dataEnvio;
 	}
 

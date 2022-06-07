@@ -23,9 +23,12 @@ import com.example.ecommerce.exceptions.EmptyListException;
 import com.example.ecommerce.exceptions.NoSuchElementFoundException;
 import com.example.ecommerce.services.PedidoService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/pedido")
 @Validated
+@Tag(name = "Pedidos", description = "Endpoints")
 public class PedidoController {
 	@Autowired
 	PedidoService pedidoService;

@@ -1,6 +1,6 @@
 package com.example.ecommerce.entities;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,8 +11,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 
 @Entity
 @Table(name = "produto")
@@ -24,17 +27,20 @@ public class Produto {
 	@Column(name = "id_produto")
 	private Integer idProduto;
 
+	@Schema(example = "Tênis")
 	@Column(name = "nome")
 	private String nomeProduto;
 
+	@Schema(example = "Tênis de corrida")
 	@Column(name = "descricao")
 	private String descricaoProduto;
 
 	@Column(name = "qtd_estoque")
 	private Integer qtdEstoque;
-
+	
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	@Column(name = "data_cadastro")
-	private Date dataCadastro;
+	private LocalDate dataCadastro;
 
 	@Column(name = "valor_unitario")
 	private Double valorUnitario;
@@ -78,11 +84,11 @@ public class Produto {
 		this.qtdEstoque = qtdEstoque;
 	}
 
-	public Date getDataCadastro() {
+	public LocalDate getDataCadastro() {
 		return dataCadastro;
 	}
 
-	public void setDataCadastro(Date dataCadastro) {
+	public void setDataCadastro(LocalDate dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
 
@@ -117,7 +123,5 @@ public class Produto {
 				+ ", valorUnitario=" + valorUnitario + ", imagemProduto=" + imagemProduto + ", categoria=" + categoria
 				+ "]";
 	}
-
-	
 
 }

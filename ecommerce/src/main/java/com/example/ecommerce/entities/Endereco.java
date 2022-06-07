@@ -16,6 +16,8 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 @Entity
 @Table(name = "endereco")
 @JsonIdentityInfo(scope = Endereco.class, generator = ObjectIdGenerators.PropertyGenerator.class, property = "idEndereco")
@@ -27,8 +29,9 @@ public class Endereco {
 	private Integer idEndereco;
 
 	@NotBlank(message = "Insira um CEP")
-	@Column(name = "cep")
-	private String cep;
+    @Schema(example = "XXXXX-XXX")
+    @Column(name = "cep")
+    private String cep;
 
 	@JsonProperty("logradouro")
 	@Column(name = "rua")

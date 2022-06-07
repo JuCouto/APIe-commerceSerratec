@@ -1,5 +1,6 @@
 package com.example.ecommerce.dtos;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -8,13 +9,17 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class PedidoDTO {
 
 	private Integer idPedido;
-
-	private Date dataPedido;
-
-	private Date dataEntrega;
-
-    private Date dataEnvio;
-
+	
+	@JsonFormat(pattern = "dd/MM/yyyy")
+	private LocalDate dataPedido;
+	
+	@JsonFormat(pattern = "dd/MM/yyyy")
+	private LocalDate dataEntrega;
+	
+	@JsonFormat(pattern = "dd/MM/yyyy")
+	private LocalDate dataEnvio;
+	
+	
 	private Boolean statusPedido;
 
 	private Double total;
@@ -31,27 +36,29 @@ public class PedidoDTO {
 		this.idPedido = idPedido;
 	}
 
-	public Date getDataPedido() {
+	
+
+	public LocalDate getDataPedido() {
 		return dataPedido;
 	}
 
-	public void setDataPedido(Date dataPedido) {
+	public void setDataPedido(LocalDate dataPedido) {
 		this.dataPedido = dataPedido;
 	}
 
-	public Date getDataEntrega() {
+	public LocalDate getDataEntrega() {
 		return dataEntrega;
 	}
 
-	public void setDataEntrega(Date dataEntrega) {
+	public void setDataEntrega(LocalDate dataEntrega) {
 		this.dataEntrega = dataEntrega;
 	}
 
-	public Date getDataEnvio() {
+	public LocalDate getDataEnvio() {
 		return dataEnvio;
 	}
 
-	public void setDataEnvio(Date dataEnvio) {
+	public void setDataEnvio(LocalDate dataEnvio) {
 		this.dataEnvio = dataEnvio;
 	}
 
@@ -92,4 +99,12 @@ public class PedidoDTO {
 		total = soma;
 		return total;
 	}
+
+	@Override
+	public String toString() {
+		return "PedidoDTO [idPedido=" + idPedido + ", dataPedido=" + dataPedido + ", dataEntrega=" + dataEntrega
+				+ ", dataEnvio=" + dataEnvio + ", statusPedido=" + statusPedido + ", total=" + total + ", clienteDTO="
+				+ clienteDTO + ", itemPedidoDTO=" + itemPedidoDTO + "]";
+	}
+
 }

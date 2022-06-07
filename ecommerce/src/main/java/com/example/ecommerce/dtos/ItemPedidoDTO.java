@@ -14,7 +14,7 @@ public class ItemPedidoDTO {
 
 	private Double valorLiquido;
 
-	//private PedidoDTO pedidoDTO;
+	// private PedidoDTO pedidoDTO;
 
 	private ProdutoDTO produtoDTO;
 
@@ -72,6 +72,13 @@ public class ItemPedidoDTO {
 
 	public void setProdutoDTO(ProdutoDTO produtoDTO) {
 		this.produtoDTO = produtoDTO;
+	}
+
+	@Override
+	public String toString() {
+		return "ItemPedidoDTO [idItemPedido=" + idItemPedido + ", qtdItemPedido=" + qtdItemPedido + ", precoVenda="
+				+ precoVenda + ", percentualDesconto=" + percentualDesconto + ", valorBruto=" + valorBruto
+				+ ", valorLiquido=" + valorLiquido + ", produtoDTO=" + produtoDTO + "]";
 	}
 
 }

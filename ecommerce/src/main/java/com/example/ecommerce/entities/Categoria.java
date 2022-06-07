@@ -9,10 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 
 @Entity
 @Table(name = "categoria")
@@ -24,9 +27,13 @@ public class Categoria {
 	@Column(name = "id_categoria")
 	private Integer idCategoria;
 
+	@NotBlank(message = "O nome da categoria precisa ser preenchido.")
+	@Schema(example = "Esporte")
 	@Column(name = "nome")
 	private String nomeCategoria;
 
+	@NotBlank(message = "A descrição da categoria precisa ser preenchida.")
+	@Schema(example = "Artigos esportivos")
 	@Column(name = "descricao")
 	private String descricaoCategoria;
 

@@ -12,8 +12,8 @@ public class ClienteDTO {
 
 	private String telefoneCliente;
 
-	//private List<PedidoDTO> listaPedidoDTO;
-	
+	// private List<PedidoDTO> listaPedidoDTO;
+
 	private EnderecoDTO enderecoDTO;
 
 	public Integer getIdCliente() {
@@ -62,6 +62,13 @@ public class ClienteDTO {
 
 	public void setEnderecoDTO(EnderecoDTO enderecoDTO) {
 		this.enderecoDTO = enderecoDTO;
+	}
+
+	@Override
+	public String toString() {
+		return "ClienteDTO [idCliente=" + idCliente + ", emailCliente=" + emailCliente + ", nomeCliente=" + nomeCliente
+				+ ", cpfCliente=" + cpfCliente + ", telefoneCliente=" + telefoneCliente + ", enderecoDTO=" + enderecoDTO
+				+ "]";
 	}
 
 }

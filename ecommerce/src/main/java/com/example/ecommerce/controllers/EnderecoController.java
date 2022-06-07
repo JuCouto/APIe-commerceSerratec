@@ -23,9 +23,12 @@ import com.example.ecommerce.exceptions.EmptyListException;
 import com.example.ecommerce.exceptions.NoSuchElementFoundException;
 import com.example.ecommerce.services.EnderecoService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/endereco")
 @Validated
+@Tag(name = "Endereços", description = "Endpoints")
 public class EnderecoController {
 	@Autowired
 	EnderecoService enderecoService;

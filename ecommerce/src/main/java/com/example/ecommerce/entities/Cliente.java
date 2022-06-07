@@ -20,6 +20,8 @@ import org.hibernate.validator.constraints.br.CPF;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 @Entity
 @Table(name = "cliente")
 @JsonIdentityInfo(scope = Cliente.class, generator = ObjectIdGenerators.PropertyGenerator.class, property = "idCliente")
@@ -31,22 +33,25 @@ public class Cliente {
 	private Integer idCliente;
 
 	@Email(message = "E-mail inválido")
-	@NotBlank(message = "E-mail não pode estar em branco.")
-	@Column(name = "email")
-	private String emailCliente;
+    @NotBlank(message = "E-mail não pode estar em branco.")
+    @Schema(example = "exemplo@exemplo.com.br")
+    @Column(name = "email")
+    private String emailCliente;
 
 	@Column(name = "nome_completo")
 	@NotBlank(message = "O nome não pode estar em branco")
 	private String nomeCliente;
 
 	@CPF(message = "CPF inválido.")
-	@NotBlank(message = "CPF não pode estar vazio.")
-	@Column(name = "cpf")
-	private String cpfCliente;
+    @NotBlank(message = "CPF não pode estar vazio.")
+    @Schema(example = "XXX.XXX.XXX-XX")
+    @Column(name = "cpf")
+    private String cpfCliente;
 
 	@Size(min = 11, max = 15, message = "O telefone deve ter entre 11 e 15 caracteres.")
-	@Column(name = "telefone")
-	private String telefoneCliente;
+    @Schema(example = "(DDD) 90000-0000")
+    @Column(name = "telefone")
+    private String telefoneCliente;
 
 	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> listaPedido;

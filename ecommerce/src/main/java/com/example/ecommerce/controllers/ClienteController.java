@@ -23,9 +23,12 @@ import com.example.ecommerce.exceptions.EmptyListException;
 import com.example.ecommerce.exceptions.NoSuchElementFoundException;
 import com.example.ecommerce.services.ClienteService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/cliente")
 @Validated
+@Tag(name = "Clientes", description = "Endpoints")
 public class ClienteController {
 
 	@Autowired
