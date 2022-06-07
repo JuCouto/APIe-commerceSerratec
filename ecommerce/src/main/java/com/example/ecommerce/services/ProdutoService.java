@@ -1,6 +1,7 @@
 package com.example.ecommerce.services;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,7 +115,7 @@ public class ProdutoService {
 		ProdutoDTO produtoDTO = new ProdutoDTO();
 		produtoDTO.setIdProduto(produto.getIdProduto());
 		produtoDTO.setDescricaoProduto(produto.getDescricaoProduto());
-		produtoDTO.setDataCadastro(produto.getDataCadastro());
+		produtoDTO.setDataCadastro(LocalDate.now());
 		produtoDTO.setImagemProduto(produto.getImagemProduto());
 		produtoDTO.setNomeProduto(produto.getNomeProduto());
 		produtoDTO.setValorUnitario(produto.getValorUnitario());
@@ -129,7 +130,7 @@ public class ProdutoService {
 		Produto produto = new Produto();
 		produto.setIdProduto(produtoDTO.getIdProduto());
 		produto.setDescricaoProduto(produtoDTO.getDescricaoProduto());
-		produto.setDataCadastro(produtoDTO.getDataCadastro());
+		produto.setDataCadastro(LocalDate.now());
 		produto.setImagemProduto(produtoDTO.getImagemProduto());
 		produto.setNomeProduto(produtoDTO.getNomeProduto());
 		produto.setValorUnitario(produtoDTO.getValorUnitario());

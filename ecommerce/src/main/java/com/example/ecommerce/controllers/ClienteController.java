@@ -18,11 +18,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ecommerce.dtos.ClienteDTO;
+import com.example.ecommerce.entities.Categoria;
 import com.example.ecommerce.entities.Cliente;
 import com.example.ecommerce.exceptions.EmptyListException;
 import com.example.ecommerce.exceptions.NoSuchElementFoundException;
 import com.example.ecommerce.services.ClienteService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
@@ -34,6 +39,13 @@ public class ClienteController {
 	@Autowired
 	ClienteService clienteService;
 
+	@Operation(summary = "Listar todos os clientes", responses = {
+	@ApiResponse(responseCode = "200", description = "Listar todos", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) }) })
+	@ApiResponse(responseCode = "400", description = "Não encontrado", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) })
+	@ApiResponse(responseCode = "404", description = "Recurso não encontrado", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) })
 	@GetMapping
 	public ResponseEntity<List<Cliente>> findAllCliente() {
 		List<Cliente> clienteList = clienteService.findAllClientes();
@@ -44,6 +56,13 @@ public class ClienteController {
 		}
 	}
 
+	@Operation(summary = "Listar um cliente", responses = {
+	@ApiResponse(responseCode = "200", description = "Listado com sucesso", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) }) })
+	@ApiResponse(responseCode = "400", description = "ID Inválido", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) })
+	@ApiResponse(responseCode = "404", description = "Recurso não encontrado", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) })
 	@GetMapping("/dto/{id}")
 	public ResponseEntity<ClienteDTO> findClienteDTOById(@PathVariable Integer id) {
 		ClienteDTO clienteDTO = clienteService.findClienteDTOById(id);
@@ -55,18 +74,39 @@ public class ClienteController {
 
 	}
 
+	@Operation(summary = "Inserir os dados de cliente", responses = {
+	@ApiResponse(responseCode = "200", description = "Salvo com sucesso", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) }) })
+	@ApiResponse(responseCode = "400", description = "ID Inválido", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) })
+	@ApiResponse(responseCode = "404", description = "Recurso não encontrado", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) })			
 	@PostMapping("/dto")
 	public ResponseEntity<ClienteDTO> saveClienteDTO(@Valid @RequestBody ClienteDTO clienteDTO) {
 		ClienteDTO novoClienteDTO = clienteService.saveClienteDTO(clienteDTO);
 		return new ResponseEntity<>(novoClienteDTO, HttpStatus.CREATED);
 	}
 
+	@Operation(summary = "Atualizar os dados de cliente", responses = {
+	@ApiResponse(responseCode = "200", description = "Atualizado com sucesso", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) }) })
+	@ApiResponse(responseCode = "400", description = "ID Inválido", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) })
+	@ApiResponse(responseCode = "404", description = "Recurso não encontrado", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) })
 	@PutMapping("/dto")
 	public ResponseEntity<ClienteDTO> updateClienteDTO(@Valid @RequestBody ClienteDTO clienteDTO) {
 		ClienteDTO novoClienteDTO = clienteService.updateClienteDTO(clienteDTO);
 		return new ResponseEntity<>(novoClienteDTO, HttpStatus.OK);
 	}
 
+	@Operation(summary = "Remover um cliente", responses = {
+	@ApiResponse(responseCode = "200", description = "Deletado com sucesso", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) }) })
+	@ApiResponse(responseCode = "400", description = "ID Inválido", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) })
+	@ApiResponse(responseCode = "404", description = "Recurso não encontrado", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) })
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteCliente(@PathVariable Integer id) {
 		if (clienteService.findClienteById(id) == null) {

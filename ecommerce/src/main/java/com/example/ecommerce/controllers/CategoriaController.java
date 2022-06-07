@@ -40,11 +40,13 @@ public class CategoriaController {
 	@Autowired
 	CategoriaService categoriaService;
 
-	@Operation(summary = "Get car by color.", responses = {
-			@ApiResponse(responseCode = "200", description = "Listar todos !", content = {
-					@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) }) })
-	@ApiResponse(responseCode = "400", description = "Não encontrado !", content = {
-			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) }) 
+	@Operation(summary = "Listar todas as categorias", responses = {
+	@ApiResponse(responseCode = "200", description = "Listar todas", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) }) })
+	@ApiResponse(responseCode = "400", description = "Não encontrado", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) })
+	@ApiResponse(responseCode = "404", description = "Recurso não encontrado", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) })
 	@GetMapping
 	public ResponseEntity<List<Categoria>> findAllCategoria() {
 		List<Categoria> categoriaList = categoriaService.findAllCategoria();
@@ -55,6 +57,13 @@ public class CategoriaController {
 		}
 	}
 
+	@Operation(summary = "Listar uma categoria", responses = {
+	@ApiResponse(responseCode = "200", description = "Listado com sucesso", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) }) })
+	@ApiResponse(responseCode = "400", description = "ID Inválido", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) })
+	@ApiResponse(responseCode = "404", description = "Recurso não encontrado", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) })
 	@GetMapping("/dto/{id}")
 	public ResponseEntity<CategoriaDTO> findCategoriaDTOById(@PathVariable Integer id) {
 		CategoriaDTO categoriaDTO = categoriaService.findCategoriaDTOById(id);
@@ -65,7 +74,14 @@ public class CategoriaController {
 		}
 
 	}
-
+	
+	@Operation(summary = "Listar uma categoria e sua lista de produto", responses = {
+	@ApiResponse(responseCode = "200", description = "Buscado com sucesso", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) }) })
+	@ApiResponse(responseCode = "400", description = "ID Inválido", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) })
+	@ApiResponse(responseCode = "404", description = "Recurso não encontrado", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) })			
 	@GetMapping("/produto/dto/{id}")
 	public ResponseEntity<CategoriaListaProdutoDTO> findCategoriaListProdutoDTOById(@PathVariable Integer id) {
 		CategoriaListaProdutoDTO categoriaDTO = categoriaService.findCategoriaListaProdutoDTOById(id);
@@ -74,21 +90,41 @@ public class CategoriaController {
 		} else {
 			return new ResponseEntity<>(categoriaDTO, HttpStatus.OK);
 		}
-
 	}
 
+	@Operation(summary = "Inserir os dados de categoria", responses = {
+	@ApiResponse(responseCode = "200", description = "Salvo com sucesso", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) }) })
+	@ApiResponse(responseCode = "400", description = "ID Inválido", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) })
+	@ApiResponse(responseCode = "404", description = "Recurso não encontrado", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) })					
 	@PostMapping("/dto")
 	public ResponseEntity<CategoriaDTO> saveCategoriaDTO(@Valid @RequestBody CategoriaDTO categoriaDTO) {
 		CategoriaDTO novaCategoriaDTO = categoriaService.saveCategoriaDTO(categoriaDTO);
 		return new ResponseEntity<>(novaCategoriaDTO, HttpStatus.CREATED);
 	}
-
+	
+	@Operation(summary = "Atualizar os dados de categoria", responses = {
+	@ApiResponse(responseCode = "200", description = "Atualizado com sucesso", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) }) })
+	@ApiResponse(responseCode = "400", description = "ID Inválido", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) })
+	@ApiResponse(responseCode = "404", description = "Recurso não encontrado", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) })							
 	@PutMapping("/dto")
 	public ResponseEntity<CategoriaDTO> updateCategoriaDTO(@Valid @RequestBody CategoriaDTO categoriaDTO) {
 		CategoriaDTO novoCategoriaDTO = categoriaService.updateCategoriaDTO(categoriaDTO);
 		return new ResponseEntity<>(novoCategoriaDTO, HttpStatus.OK);
 	}
-
+	
+	@Operation(summary = "Remover uma categoria", responses = {
+	@ApiResponse(responseCode = "200", description = "Deletado com sucesso", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) }) })
+	@ApiResponse(responseCode = "400", description = "ID Inválido", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) })
+	@ApiResponse(responseCode = "404", description = "Recurso não encontrado", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) })										
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteCategoria(@PathVariable Integer id) {
 		if (categoriaService.findCategoriaById(id) == null) {

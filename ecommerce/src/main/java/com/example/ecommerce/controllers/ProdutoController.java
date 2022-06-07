@@ -21,11 +21,16 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.ecommerce.dtos.ProdutoDTO;
+import com.example.ecommerce.entities.Categoria;
 import com.example.ecommerce.entities.Produto;
 import com.example.ecommerce.exceptions.EmptyListException;
 import com.example.ecommerce.exceptions.NoSuchElementFoundException;
 import com.example.ecommerce.services.ProdutoService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
@@ -35,7 +40,14 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class ProdutoController {
 	@Autowired
 	ProdutoService produtoService;
-
+	
+	@Operation(summary = "Listar todos os produtos", responses = {
+	@ApiResponse(responseCode = "200", description = "Listar todos", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) }) })
+	@ApiResponse(responseCode = "400", description = "Não encontrado", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) })
+	@ApiResponse(responseCode = "404", description = "Recurso não encontrado", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) })
 	@GetMapping
 	public ResponseEntity<List<Produto>> findAllProduto() {
 		List<Produto> produtoList = produtoService.findAllProduto();
@@ -45,7 +57,13 @@ public class ProdutoController {
 			return new ResponseEntity<>(produtoList, HttpStatus.OK);
 		}
 	}
-
+	@Operation(summary = "Listar um produto", responses = {
+	@ApiResponse(responseCode = "200", description = "Listado com sucesso", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) }) })
+	@ApiResponse(responseCode = "400", description = "ID Inválido", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) })
+	@ApiResponse(responseCode = "404", description = "Recurso não encontrado", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) })
 	@GetMapping("/dto/{id}")
 	public ResponseEntity<ProdutoDTO> findProdutoDTOById(@PathVariable Integer id) {
 		ProdutoDTO produtoDTO = produtoService.findProdutoDTOById(id);
@@ -54,15 +72,27 @@ public class ProdutoController {
 		} else {
 			return new ResponseEntity<>(produtoDTO, HttpStatus.OK);
 		}
-
 	}
-
+	
+	@Operation(summary = "Inserir os dados de produto", responses = {
+	@ApiResponse(responseCode = "200", description = "Salvo com sucesso", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) }) })
+	@ApiResponse(responseCode = "400", description = "ID Inválido", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) })
+	@ApiResponse(responseCode = "404", description = "Recurso não encontrado", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) })
 	@PostMapping("/dto")
 	public ResponseEntity<ProdutoDTO> saveProdutoDTO(@Valid @RequestBody ProdutoDTO produtoDTO) {
 		ProdutoDTO novoProdutoDTO = produtoService.saveProdutoDTO(produtoDTO);
 		return new ResponseEntity<>(novoProdutoDTO, HttpStatus.CREATED);
 	}
-
+	@Operation(summary = "Inserir os dados de produto com foto", responses = {
+	@ApiResponse(responseCode = "200", description = "Atualizado com sucesso", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) }) })
+	@ApiResponse(responseCode = "400", description = "ID Inválido", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) })
+	@ApiResponse(responseCode = "404", description = "Recurso não encontrado", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) })
 	@PostMapping(value = "/dto/com-foto", consumes = { MediaType.APPLICATION_JSON_VALUE,
 			MediaType.MULTIPART_FORM_DATA_VALUE })
 	public ResponseEntity<ProdutoDTO> saveProdutoDTO(@Valid @RequestPart("produtoDTO") String produtoDTO,
@@ -71,6 +101,13 @@ public class ProdutoController {
 		return new ResponseEntity<>(novoProdutoDTO, HttpStatus.CREATED);
 	}
 	
+	@Operation(summary = "Atualizar os dados de produto com foto", responses = {
+	@ApiResponse(responseCode = "200", description = "Atualizado com sucesso", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) }) })
+	@ApiResponse(responseCode = "400", description = "ID Inválido", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) })
+	@ApiResponse(responseCode = "404", description = "Recurso não encontrado", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) })
 	@PutMapping(value = "/dto/com-foto", consumes = { MediaType.APPLICATION_JSON_VALUE,
 			MediaType.MULTIPART_FORM_DATA_VALUE })
 	public ResponseEntity<ProdutoDTO> updateProdutoDTOComFoto (@Valid @RequestPart("produtoDTO") String produtoDTO,
@@ -79,12 +116,25 @@ public class ProdutoController {
 		return new ResponseEntity<>(novoProdutoDTO, HttpStatus.CREATED);
 	}
 
+	@Operation(summary = "Atualizar os dados de produto", responses = {
+	@ApiResponse(responseCode = "200", description = "Atualizado com sucesso", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) }) })
+	@ApiResponse(responseCode = "400", description = "ID Inválido", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) })
+	@ApiResponse(responseCode = "404", description = "Recurso não encontrado", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) })
 	@PutMapping("/dto")
 	public ResponseEntity<ProdutoDTO> updateProdutoDTO(@Valid @RequestBody ProdutoDTO produtoDTO) {
 		ProdutoDTO novoProdutoDTO = produtoService.updateProdutoDTO(produtoDTO);
 		return new ResponseEntity<>(novoProdutoDTO, HttpStatus.OK);
 	}
-
+	@Operation(summary = "Remover um produto", responses = {
+	@ApiResponse(responseCode = "200", description = "Deletado com sucesso", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) }) })
+	@ApiResponse(responseCode = "400", description = "ID Inválido", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) })
+	@ApiResponse(responseCode = "404", description = "Recurso não encontrado", content = {
+			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) })
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteProduto(@PathVariable Integer id) {
 		if (produtoService.findProdutoById(id) == null) {

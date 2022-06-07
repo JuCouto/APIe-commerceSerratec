@@ -75,15 +75,44 @@ public class PedidoService {
 		pedidoDTO.setIdPedido(pedido.getIdPedido());
 		pedidoDTO.setClienteDTO(clienteService.findClienteDTOById(pedidoDTO.getClienteDTO().getIdCliente()));
 		pedidoDTO.setDataPedido(LocalDate.now());
-		String corpoEmail = " Parabéns. Seu pedido foi finalizado com sucesso! " + pedidoDTO.toString();
-		mailService.enviarEmailTexto("teste@teste.com", "Cadastro de Categoria", corpoEmail);
-		return pedidoDTO;
+		if (pedidoDTO.getStatusPedido() == false) {
+			String corpoEmail = " Parabéns. Seu pedido foi finalizado com sucesso! " + pedidoDTO.toString();
+			mailService.enviarEmailTexto("teste@teste.com", "Cadastro de Categoria", corpoEmail);
+			return pedidoDTO;
+		} else {
+			String corpoEmail = " Parabéns. Seu pedido foi criado com sucesso! " + pedidoDTO.toString();
+			mailService.enviarEmailTexto("teste@teste.com", "Cadastro de Categoria", corpoEmail);
+			return pedidoDTO;
+		}
 	}
 
 	public PedidoDTO updatePedidoDTO(PedidoDTO pedidoDTO) {
 		Pedido pedido = converterDTOParaEntidade(pedidoDTO);
-		Pedido novoPedido = pedidoRepository.save(pedido);
-		return converterEntidadeParaDTO(novoPedido);
+		pedidoRepository.save(pedido);
+		List<ItemPedido> listaItemPedido = pedido.getListaItemPedido();
+
+		for (ItemPedido itemPedido : listaItemPedido) {
+			itemPedido.setPedido(pedido);
+			Produto produto = produtoService.findProdutoById(itemPedido.getProduto().getIdProduto());
+			itemPedido.setProduto(produto);
+		}
+
+		List<ItemPedido> novoPedido = itemPedidoService.saveListaItemPedido(listaItemPedido);
+
+		List<ItemPedidoDTO> converterEntidadeParaDTO = itemPedidoService.converterEntidadeParaDTO(novoPedido);
+		pedidoDTO.setItemPedidoDTO(converterEntidadeParaDTO);
+		pedidoDTO.setIdPedido(pedido.getIdPedido());
+		pedidoDTO.setClienteDTO(clienteService.findClienteDTOById(pedidoDTO.getClienteDTO().getIdCliente()));
+		pedidoDTO.setDataPedido(LocalDate.now());
+		if (pedidoDTO.getStatusPedido() == true) {
+			String corpoEmail = " Parabéns. Seu pedido foi atualizado com sucesso! " + pedidoDTO.toString();
+			mailService.enviarEmailTexto("teste@teste.com", "Cadastro de Categoria", corpoEmail);
+			return pedidoDTO;
+		} else {
+			String corpoEmail = " Parabéns. Seu pedido foi finalizado com sucesso! " + pedidoDTO.toString();
+			mailService.enviarEmailTexto("teste@teste.com", "Cadastro de Categoria", corpoEmail);
+			return pedidoDTO;
+		}
 	}
 
 	public void deletePedido(Integer id) {
@@ -95,7 +124,7 @@ public class PedidoService {
 		pedidoDTO.setIdPedido(pedido.getIdPedido());
 		pedidoDTO.setDataEntrega(pedido.getDataEntrega());
 		pedidoDTO.setDataEnvio(pedido.getDataEnvio());
-		pedidoDTO.setDataPedido(pedido.getDataPedido());
+		pedidoDTO.setDataPedido(LocalDate.now());
 		pedidoDTO.setStatusPedido(pedido.getStatusPedido());
 		ClienteDTO clienteDTO = clienteService.findClienteDTOById(pedido.getCliente().getIdCliente());
 		pedidoDTO.setClienteDTO(clienteDTO);
