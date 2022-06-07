@@ -66,9 +66,8 @@ public class ClienteDTO {
 
 	@Override
 	public String toString() {
-		return "ClienteDTO [idCliente=" + idCliente + ", emailCliente=" + emailCliente + ", nomeCliente=" + nomeCliente
-				+ ", cpfCliente=" + cpfCliente + ", telefoneCliente=" + telefoneCliente + ", enderecoDTO=" + enderecoDTO
-				+ "]";
+		return "\n Nome: " + nomeCliente+ " \n Email: " + emailCliente +  "\n Cpf: " + cpfCliente +
+				"\n Telefone: " + telefoneCliente + enderecoDTO;
 	}
 
 }

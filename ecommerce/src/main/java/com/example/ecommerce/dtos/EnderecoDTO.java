@@ -19,7 +19,7 @@ public class EnderecoDTO {
 
 	private String uf;
 
-	//private List<ClienteDTO> clienteList;
+	// private List<ClienteDTO> clienteList;
 
 	public EnderecoDTO() {
 		super();
@@ -105,6 +105,12 @@ public class EnderecoDTO {
 	public Endereco converterDTOParaEntidade() {
 
 		return new Endereco(idEndereco, cep, rua, bairro, cidade, numero, complemento, uf);
+	}
+
+	@Override
+	public String toString() {
+		return "\n Cep: " + cep + "\n Rua: " + rua + "\n Bairro: " + bairro
+				+ "\n Cidade: " + cidade + "\n Numero: " + numero + "\n Complemento: " + complemento + "\n Uf: " + uf;
 	}
 
 }

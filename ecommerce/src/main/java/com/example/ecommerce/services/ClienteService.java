@@ -48,6 +48,7 @@ public class ClienteService {
 		validarCPF(clienteDTO.getCpfCliente());
 		validarEmail(clienteDTO.getEmailCliente());
 		Endereco endereco = enderecoService.consultarCep(clienteDTO.getEnderecoDTO().getCep());
+		endereco.setComplemento(clienteDTO.getEnderecoDTO().getComplemento());
 		endereco.setNumero(clienteDTO.getEnderecoDTO().getNumero());
 		Endereco saveEndereco = enderecoService.saveEndereco(endereco);
 		clienteDTO.setEnderecoDTO(saveEndereco.converterEntidadeParaDTO());

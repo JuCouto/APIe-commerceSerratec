@@ -34,10 +34,4 @@ public class CategoriaDTO {
 		this.descricaoCategoria = descricaoCategoria;
 	}
 
-	@Override
-	public String toString() {
-		return "CategoriaDTO [idCategoria=" + idCategoria + ", nomeCategoria=" + nomeCategoria + ", descricaoCategoria="
-				+ descricaoCategoria + "]";
-	}
-
 }

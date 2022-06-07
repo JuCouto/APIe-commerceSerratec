@@ -1,7 +1,6 @@
 package com.example.ecommerce.services;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,7 +75,7 @@ public class PedidoService {
 		pedidoDTO.setIdPedido(pedido.getIdPedido());
 		pedidoDTO.setClienteDTO(clienteService.findClienteDTOById(pedidoDTO.getClienteDTO().getIdCliente()));
 		pedidoDTO.setDataPedido(LocalDate.now());
-		String corpoEmail = "Foi cadastrada uma nova categoria" + pedidoDTO.toString();
+		String corpoEmail = " Parabéns. Seu pedido foi finalizado com sucesso! " + pedidoDTO.toString();
 		mailService.enviarEmailTexto("teste@teste.com", "Cadastro de Categoria", corpoEmail);
 		return pedidoDTO;
 	}

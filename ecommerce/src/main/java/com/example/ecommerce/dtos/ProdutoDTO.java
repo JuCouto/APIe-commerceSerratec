@@ -1,7 +1,6 @@
 package com.example.ecommerce.dtos;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -13,7 +12,7 @@ public class ProdutoDTO {
 	private String descricaoProduto;
 
 	private Integer qtdEstoque;
-	
+
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataCadastro;
 
@@ -55,8 +54,6 @@ public class ProdutoDTO {
 		this.qtdEstoque = qtdEstoque;
 	}
 
-	
-
 	public LocalDate getDataCadastro() {
 		return dataCadastro;
 	}
@@ -91,10 +88,7 @@ public class ProdutoDTO {
 
 	@Override
 	public String toString() {
-		return "ProdutoDTO [idProduto=" + idProduto + ", nomeProduto=" + nomeProduto + ", descricaoProduto="
-				+ descricaoProduto + ", qtdEstoque=" + qtdEstoque + ", dataCadastro=" + dataCadastro
-				+ ", imagemProduto=" + imagemProduto + ", categoriaDTO=" + categoriaDTO + "]";
+		return "\n Produto: " + nomeProduto + "\n Descrição: " + descricaoProduto;
 	}
-
 
 }
