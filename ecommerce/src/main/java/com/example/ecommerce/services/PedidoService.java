@@ -77,11 +77,11 @@ public class PedidoService {
 		pedidoDTO.setDataPedido(LocalDate.now());
 		if (pedidoDTO.getStatusPedido() == false) {
 			String corpoEmail = " Parabéns. Seu pedido foi finalizado com sucesso! " + pedidoDTO.toString();
-			mailService.enviarEmailTexto("teste@teste.com", "Cadastro de Categoria", corpoEmail);
+			mailService.enviarEmailTexto("teste@teste.com", "Cadastro de Categoria", corpoEmail, pedidoDTO);
 			return pedidoDTO;
 		} else {
 			String corpoEmail = " Parabéns. Seu pedido foi criado com sucesso! " + pedidoDTO.toString();
-			mailService.enviarEmailTexto("teste@teste.com", "Cadastro de Categoria", corpoEmail);
+			mailService.enviarEmailTexto("teste@teste.com", "Cadastro de Categoria", corpoEmail,pedidoDTO);
 			return pedidoDTO;
 		}
 	}
@@ -106,11 +106,11 @@ public class PedidoService {
 		pedidoDTO.setDataPedido(LocalDate.now());
 		if (pedidoDTO.getStatusPedido() == true) {
 			String corpoEmail = " Parabéns. Seu pedido foi atualizado com sucesso! " + pedidoDTO.toString();
-			mailService.enviarEmailTexto("teste@teste.com", "Cadastro de Categoria", corpoEmail);
+			mailService.enviarEmailTexto("teste@teste.com", "Cadastro de Categoria", corpoEmail, pedidoDTO);
 			return pedidoDTO;
 		} else {
 			String corpoEmail = " Parabéns. Seu pedido foi finalizado com sucesso! " + pedidoDTO.toString();
-			mailService.enviarEmailTexto("teste@teste.com", "Cadastro de Categoria", corpoEmail);
+			mailService.enviarEmailTexto("teste@teste.com", "Cadastro de Categoria", corpoEmail, pedidoDTO);
 			return pedidoDTO;
 		}
 	}
