@@ -2,7 +2,6 @@ package com.example.ecommerce.entities;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -55,7 +54,7 @@ public class Endereco {
 	private String uf;
 
 	
-	@OneToMany(mappedBy = "endereco", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "endereco")
 	private List<Cliente> clienteList;
 
 	public Endereco() {

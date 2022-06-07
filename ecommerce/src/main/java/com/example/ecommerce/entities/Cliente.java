@@ -1,8 +1,8 @@
 package com.example.ecommerce.entities;
 
+import java.time.LocalDate;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,6 +18,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.br.CPF;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -40,11 +41,15 @@ public class Cliente {
     private String emailCliente;
 
 	@Column(name = "nome_completo")
-	@NotBlank(message = "O nome não pode estar em branco")
+	@NotBlank(message = "O nome não pode estar em branco.")
 	private String nomeCliente;
+	
+	@Column(name = "data_nascimento")
+	@JsonFormat(pattern = "dd/MM/yyyy")
+	private LocalDate dataNascimento;
 
 	@CPF(message = "CPF inválido.")
-    @NotBlank(message = "CPF não pode estar vazio.")
+    @NotBlank(message = "CPF não pode estar em branco.")
     @Schema(example = "XXX.XXX.XXX-XX")
     @Column(name = "cpf")
     private String cpfCliente;
@@ -54,7 +59,7 @@ public class Cliente {
     @Column(name = "telefone")
     private String telefoneCliente;
 
-	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> listaPedido;
 
 	@ManyToOne
@@ -83,6 +88,14 @@ public class Cliente {
 
 	public void setNomeCliente(String nomeCliente) {
 		this.nomeCliente = nomeCliente;
+	}
+
+	public LocalDate getDataNascimento() {
+		return dataNascimento;
+	}
+
+	public void setDataNascimento(LocalDate dataNascimento) {
+		this.dataNascimento = dataNascimento;
 	}
 
 	public String getCpfCliente() {

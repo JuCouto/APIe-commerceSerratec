@@ -8,8 +8,6 @@ public class CategoriaDTO {
 
 	private String descricaoCategoria;
 
-	// private List<ProdutoDTO> produtoList;
-
 	public Integer getIdCategoria() {
 		return idCategoria;
 	}

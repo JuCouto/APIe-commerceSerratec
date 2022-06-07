@@ -1,5 +1,9 @@
 package com.example.ecommerce.dtos;
 
+import java.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class ClienteDTO {
 
 	private Integer idCliente;
@@ -7,12 +11,13 @@ public class ClienteDTO {
 	private String emailCliente;
 
 	private String nomeCliente;
+	
+	@JsonFormat(pattern = "dd/MM/yyyy")
+	private LocalDate dataNascimento;
 
 	private String cpfCliente;
 
 	private String telefoneCliente;
-
-	// private List<PedidoDTO> listaPedidoDTO;
 
 	private EnderecoDTO enderecoDTO;
 
@@ -38,6 +43,14 @@ public class ClienteDTO {
 
 	public void setNomeCliente(String nomeCliente) {
 		this.nomeCliente = nomeCliente;
+	}
+	
+	public LocalDate getDataNascimento() {
+		return dataNascimento;
+	}
+
+	public void setDataNascimento(LocalDate dataNascimento) {
+		this.dataNascimento = dataNascimento;
 	}
 
 	public String getCpfCliente() {

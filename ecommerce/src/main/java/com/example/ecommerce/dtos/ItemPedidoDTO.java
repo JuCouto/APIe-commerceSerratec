@@ -14,8 +14,6 @@ public class ItemPedidoDTO {
 
 	private Double valorLiquido;
 
-	// private PedidoDTO pedidoDTO;
-
 	private ProdutoDTO produtoDTO;
 
 	public Integer getIdItemPedido() {

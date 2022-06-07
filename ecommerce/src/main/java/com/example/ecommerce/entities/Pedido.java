@@ -3,7 +3,6 @@ package com.example.ecommerce.entities;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -51,7 +50,7 @@ public class Pedido {
 	private Cliente cliente;
 
 	
-	@OneToMany(mappedBy = "pedido", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "pedido")
 	private List<ItemPedido> listaItemPedido;
 
 	public List<ItemPedido> getListaItemPedido() {
