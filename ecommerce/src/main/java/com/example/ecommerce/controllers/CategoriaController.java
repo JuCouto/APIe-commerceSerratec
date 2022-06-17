@@ -91,6 +91,16 @@ public class CategoriaController {
 			return new ResponseEntity<>(categoriaDTO, HttpStatus.OK);
 		}
 	}
+	
+	@GetMapping("/produto/dto/nome/{nome}")	public ResponseEntity<CategoriaListaProdutoDTO> findCategoriaListProdutoDTOByNome(@PathVariable String nome) {
+		CategoriaListaProdutoDTO categoriaDTO = categoriaService.findCategoriaListaProdutoDTOByNome(nome);
+		if (categoriaDTO == null) {
+			throw new NoSuchElementFoundException("Não existe nenhuma categoria com o nome: " + nome + ".");
+		} else {
+			return new ResponseEntity<>(categoriaDTO, HttpStatus.OK);
+		}
+
+	}
 
 	@Operation(summary = "Inserir os dados de categoria", responses = {
 	@ApiResponse(responseCode = "200", description = "Salvo com sucesso", content = {

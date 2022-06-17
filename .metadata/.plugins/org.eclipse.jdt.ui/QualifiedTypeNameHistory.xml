@@ -31,4 +31,5 @@
     <fullyQualifiedTypeName name="javax.validation.constraints.FutureOrPresent"/>
     <fullyQualifiedTypeName name="javax.persistence.JoinTable"/>
     <fullyQualifiedTypeName name="java.time.LocalDate"/>
+    <fullyQualifiedTypeName name="java.util.Optional"/>
 </qualifiedTypeNameHistroy>

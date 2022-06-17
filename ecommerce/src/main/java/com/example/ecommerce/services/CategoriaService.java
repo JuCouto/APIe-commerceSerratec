@@ -52,6 +52,16 @@ public class CategoriaService {
 		}
 		return null;
 	}
+	
+	public CategoriaListaProdutoDTO findCategoriaListaProdutoDTOByNome(String nome) {
+		Categoria categoria = categoriaRepository.findByNomeCategoria(nome).isPresent() ? categoriaRepository.findByNomeCategoria(nome).get() : null;
+		CategoriaListaProdutoDTO categoriaListaProdutoDTO = new CategoriaListaProdutoDTO();
+		if (categoria != null) {
+			categoriaListaProdutoDTO = converterEntidadeParaDTOListProduto(categoria);
+			return categoriaListaProdutoDTO;
+		}
+		return null;
+	}
 
 	public Categoria saveCategoria(Categoria categoria) {
 		return categoriaRepository.save(categoria);
