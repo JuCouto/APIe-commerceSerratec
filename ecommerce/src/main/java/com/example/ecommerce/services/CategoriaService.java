@@ -117,6 +117,7 @@ public class CategoriaService {
 				produtoDTO.setIdProduto(produto.getIdProduto());
 				produtoDTO.setQtdEstoque(produto.getQtdEstoque());
 				produtoDTO.setValorUnitario(produto.getValorUnitario());
+				produtoDTO.setImagemProduto(produto.getImagemProduto());
 
 				listaProdutoDTO.add(produtoDTO);
 			}

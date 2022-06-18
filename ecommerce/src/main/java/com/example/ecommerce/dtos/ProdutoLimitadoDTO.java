@@ -11,7 +11,16 @@ public class ProdutoLimitadoDTO {
 	private Integer qtdEstoque;
 
 	private Double valorUnitario;
+	
+	private String imagemProduto;
 
+	public String getImagemProduto() {
+		return imagemProduto;
+	}
+
+	public void setImagemProduto(String imagemProduto) {
+		this.imagemProduto = imagemProduto;
+	}
 
 	public Integer getIdProduto() {
 		return idProduto;
