@@ -61,6 +61,13 @@ public class Cliente {
 
 	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> listaPedido;
+	
+	@NotBlank(message = "A senha não pode estar em branco.")
+	@Column(name= "senha")
+	private String senha;
+	
+	@Column(name = "admin")
+	private Boolean admin;
 
 	@ManyToOne
 	@JoinColumn(name = "id_endereco", referencedColumnName = "id_endereco")
@@ -68,6 +75,22 @@ public class Cliente {
 
 	public Integer getIdCliente() {
 		return idCliente;
+	}
+
+	public Boolean getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(Boolean admin) {
+		this.admin = admin;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 	public void setIdCliente(Integer idCliente) {
