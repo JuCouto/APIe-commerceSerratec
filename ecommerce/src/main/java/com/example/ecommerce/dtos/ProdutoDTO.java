@@ -1,9 +1,5 @@
 package com.example.ecommerce.dtos;
 
-import java.time.LocalDate;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 public class ProdutoDTO {
 	private Integer idProduto;
 
