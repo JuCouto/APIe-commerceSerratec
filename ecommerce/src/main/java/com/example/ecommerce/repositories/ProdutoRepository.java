@@ -20,6 +20,7 @@ public interface ProdutoRepository extends JpaRepository<Produto, Integer>{
 	            + " OR p.descricaoProduto LIKE  %?1%")
 	    public List<Produto> pesquisaIgonereCase(String palavraChave);
 	   
+	   @Query("SELECT p FROM Produto p WHERE LOWER(UNACCENT(p.nomeProduto)) LIKE LOWER(UNACCENT(CONCAT('%', :nome, '%')))")
 	    List<Produto> findByNomeProdutoContainingIgnoreCase(String nome);  
 	    
 	    Page<Produto> findAll(Pageable pageable);
