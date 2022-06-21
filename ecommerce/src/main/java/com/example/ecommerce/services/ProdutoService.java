@@ -32,6 +32,13 @@ public class ProdutoService {
 		return produtoRepository.findAll();
 	}
 
+	public List<Produto> listAll(String palavraChave) {
+		if (palavraChave != null) {
+			return produtoRepository.pesquisaIgonereCase(palavraChave);
+		}
+		return produtoRepository.findAll();
+	}
+
 	public Produto findProdutoById(Integer id) {
 		return produtoRepository.findById(id).isPresent() ? produtoRepository.findById(id).get() : null;
 	}
@@ -46,6 +53,29 @@ public class ProdutoService {
 		return null;
 	}
 
+	public ProdutoDTO findProdutoDTOByNome(String nome) {
+		Produto produto = produtoRepository.findByNomeProdutoIgnoreCase(nome).isPresent()
+				? produtoRepository.findByNomeProdutoIgnoreCase(nome).get()
+				: null;
+		ProdutoDTO produtoDTO = new ProdutoDTO();
+		if (produto != null) {
+			produtoDTO = converterEntidadeParaDTO(produto);
+			return produtoDTO;
+		}
+		return null;
+	}
+
+	public ProdutoDTO findProdutoDTOByDescricao(String descricao) {
+		Produto produto = produtoRepository.findByDescricaoProdutoIgnoreCase(descricao).isPresent()
+				? produtoRepository.findByDescricaoProdutoIgnoreCase(descricao).get()
+				: null;
+		ProdutoDTO produtoDTO = new ProdutoDTO();
+		if (produto != null) {
+			produtoDTO = converterEntidadeParaDTO(produto);
+			return produtoDTO;
+		}
+		return null;
+	}
 
 	public ProdutoDTO saveProdutoDTO(ProdutoDTO produtoDTO) {
 		validarDescricao(produtoDTO.getDescricaoProduto());
@@ -83,7 +113,7 @@ public class ProdutoService {
 
 		return converterEntidadeParaDTO(produtoAtualizado);
 	}
-	
+
 	public ProdutoDTO updateProdutoComFotoDTO(String produtoStringDTO, MultipartFile file) throws Exception {
 		ProdutoDTO produtoConvertidoDTO = new ProdutoDTO();
 		try {
@@ -142,7 +172,7 @@ public class ProdutoService {
 	}
 
 	public void validarDescricao(String descricaoProduto) {
-		var produto = produtoRepository.findByDescricaoProduto(descricaoProduto);
+		var produto = produtoRepository.findByDescricaoProdutoIgnoreCase(descricaoProduto);
 		if (produto.isPresent()) {
 			throw new InvalidDescriptionException("Existe um produto com essa descrição.");
 		}

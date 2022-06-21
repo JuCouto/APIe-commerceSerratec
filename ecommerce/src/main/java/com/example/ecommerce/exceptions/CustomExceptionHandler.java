@@ -114,4 +114,14 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
 	}
 	
+	@ExceptionHandler(InvalidNomeIgualException.class)
+	public final ResponseEntity<Object> handleInvalidNomeIgualException(InvalidNomeIgualException ex, WebRequest request){
+	List<String> details = new ArrayList<>();
+	details.add(ex.getLocalizedMessage());
+	HttpStatus httpStatus = HttpStatus.CONFLICT;
+	ErrorResponse error = new ErrorResponse(httpStatus.value(), "Nome inválido", details);
+	
+	return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+}
+	
 }

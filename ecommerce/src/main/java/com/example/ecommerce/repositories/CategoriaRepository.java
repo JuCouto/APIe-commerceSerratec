@@ -7,6 +7,10 @@ import com.example.ecommerce.entities.Categoria;
 
 public interface CategoriaRepository extends JpaRepository<Categoria, Integer>{
 
-	Optional<Categoria> findByNomeCategoria(String nome);
+	Optional<Categoria> findByNomeCategoriaIgnoreCase(String nome);
+	
+	Optional<Categoria> findByDescricaoCategoria(String descricao);
+
+	
 
 }

@@ -2,8 +2,6 @@ package com.example.ecommerce.dtos;
 
 import java.time.LocalDate;
 
-import javax.persistence.Column;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class ClienteDTO {

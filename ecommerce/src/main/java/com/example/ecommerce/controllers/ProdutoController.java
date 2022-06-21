@@ -5,9 +5,11 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -59,6 +61,12 @@ public class ProdutoController {
 			return new ResponseEntity<>(produtoList, HttpStatus.OK);
 		}
 	}
+	
+		@GetMapping("/filtro/{palavraChave}")
+	    public List<Produto> filtro(@PathVariable("palavraChave") String palavraChave) {
+	        List<Produto> listaProdutos = produtoService.listAll(palavraChave);
+			return listaProdutos;
+	    }
 	@Operation(summary = "Listar um produto", responses = {
 	@ApiResponse(responseCode = "200", description = "Listado com sucesso", content = {
 			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) }) })
@@ -71,6 +79,26 @@ public class ProdutoController {
 		ProdutoDTO produtoDTO = produtoService.findProdutoDTOById(id);
 		if (produtoDTO == null) {
 			throw new NoSuchElementFoundException("Não existe nenhum produto com o ID: " + id + ".");
+		} else {
+			return new ResponseEntity<>(produtoDTO, HttpStatus.OK);
+		}
+	}
+	
+	@GetMapping("/dto/nome/{nome}")
+	public ResponseEntity<ProdutoDTO> findProdutoDTOByNome(@PathVariable String nome) {
+		ProdutoDTO produtoDTO = produtoService.findProdutoDTOByNome(nome);
+		if (produtoDTO == null) {
+			throw new NoSuchElementFoundException("Não existe nenhum produto com o nome: " + nome + ".");
+		} else {
+			return new ResponseEntity<>(produtoDTO, HttpStatus.OK);
+		}
+	}
+	
+	@GetMapping("/dto/descricao/{descricao}")
+	public ResponseEntity<ProdutoDTO> findProdutoDTOByDescricao(@PathVariable String descricao) {
+		ProdutoDTO produtoDTO = produtoService.findProdutoDTOByDescricao(descricao);
+		if (produtoDTO == null) {
+			throw new NoSuchElementFoundException("Não existe nenhum produto com a descricao: " + descricao + ".");
 		} else {
 			return new ResponseEntity<>(produtoDTO, HttpStatus.OK);
 		}

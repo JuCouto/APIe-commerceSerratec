@@ -11,6 +11,8 @@ import com.example.ecommerce.dtos.CategoriaListaProdutoDTO;
 import com.example.ecommerce.dtos.ProdutoLimitadoDTO;
 import com.example.ecommerce.entities.Categoria;
 import com.example.ecommerce.entities.Produto;
+import com.example.ecommerce.exceptions.InvalidDescriptionException;
+import com.example.ecommerce.exceptions.InvalidNomeIgualException;
 import com.example.ecommerce.repositories.CategoriaRepository;
 
 @Service
@@ -54,7 +56,7 @@ public class CategoriaService {
 	}
 	
 	public CategoriaListaProdutoDTO findCategoriaListaProdutoDTOByNome(String nome) {
-		Categoria categoria = categoriaRepository.findByNomeCategoria(nome).isPresent() ? categoriaRepository.findByNomeCategoria(nome).get() : null;
+		Categoria categoria = categoriaRepository.findByNomeCategoriaIgnoreCase(nome).isPresent() ? categoriaRepository.findByNomeCategoriaIgnoreCase(nome).get() : null;
 		CategoriaListaProdutoDTO categoriaListaProdutoDTO = new CategoriaListaProdutoDTO();
 		if (categoria != null) {
 			categoriaListaProdutoDTO = converterEntidadeParaDTOListProduto(categoria);
@@ -69,13 +71,16 @@ public class CategoriaService {
 
 	public CategoriaDTO saveCategoriaDTO(CategoriaDTO categoriaDTO) {
 		Categoria categoria = converterDTOParaEntidade(categoriaDTO);
+		validarCategoriaNome(categoria.getNomeCategoria());
+		validarCategoriaDescricao(categoria.getDescricaoCategoria());
 		Categoria novaCategoria = categoriaRepository.save(categoria);
-
 		return converterEntidadeParaDTO(novaCategoria);
 	}
 
 	public CategoriaDTO updateCategoriaDTO(CategoriaDTO categoriaDTO) {
 		Categoria categoria = converterDTOParaEntidade(categoriaDTO);
+		validarCategoriaNome(categoria.getNomeCategoria());
+		validarCategoriaDescricao(categoria.getDescricaoCategoria());
 		Categoria novaCategoria = categoriaRepository.save(categoria);
 
 		return converterEntidadeParaDTO(novaCategoria);
@@ -125,4 +130,17 @@ public class CategoriaService {
 		}
 		return categoriaListaProdutoDTO;
 }
+    public void validarCategoriaNome(String nome) {
+		var categoria = categoriaRepository.findByNomeCategoriaIgnoreCase(nome);
+		if (categoria.isPresent()) {
+			throw new InvalidNomeIgualException("Existe uma categoria com esse nome.");
+		}
+	}
+    
+    public void validarCategoriaDescricao(String descricaoCategoria) {
+		var categoria = categoriaRepository.findByDescricaoCategoria(descricaoCategoria);
+		if (categoria.isPresent()) {
+			throw new InvalidDescriptionException("Existe uma categoria com essa descrição.");
+		}
+	}
 }
