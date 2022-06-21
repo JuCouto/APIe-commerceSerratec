@@ -13,9 +13,6 @@ public class ProdutoDTO {
 
 	private Integer qtdEstoque;
 
-	@JsonFormat(pattern = "dd/MM/yyyy")
-	private LocalDate dataCadastro;
-
 	private Double valorUnitario;
 
 	private String imagemProduto;
@@ -52,14 +49,6 @@ public class ProdutoDTO {
 
 	public void setQtdEstoque(Integer qtdEstoque) {
 		this.qtdEstoque = qtdEstoque;
-	}
-
-	public LocalDate getDataCadastro() {
-		return dataCadastro;
-	}
-
-	public void setDataCadastro(LocalDate dataCadastro) {
-		this.dataCadastro = dataCadastro;
 	}
 
 	public Double getValorUnitario() {

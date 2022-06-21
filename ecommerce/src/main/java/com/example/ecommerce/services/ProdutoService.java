@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,8 +30,8 @@ public class ProdutoService {
 	@Autowired
 	ArquivoService arquivoService;
 
-	public List<Produto> findAllProduto() {
-		return produtoRepository.findAll();
+	public Page<Produto> findAllProduto(Pageable pageable) {
+		return produtoRepository.findAll(pageable);
 	}
 
 	public List<Produto> listAll(String palavraChave) {
@@ -76,6 +78,14 @@ public class ProdutoService {
 		}
 		return null;
 	}
+	
+	public List<Produto> listAllContains(String palavraChave) {
+		if (palavraChave != null) {
+			return produtoRepository.findByNomeProdutoContainingIgnoreCase(palavraChave);
+		}
+		return produtoRepository.findAll();
+	}
+
 
 	public ProdutoDTO saveProdutoDTO(ProdutoDTO produtoDTO) {
 		validarDescricao(produtoDTO.getDescricaoProduto());
@@ -145,7 +155,6 @@ public class ProdutoService {
 		ProdutoDTO produtoDTO = new ProdutoDTO();
 		produtoDTO.setIdProduto(produto.getIdProduto());
 		produtoDTO.setDescricaoProduto(produto.getDescricaoProduto());
-		produtoDTO.setDataCadastro(LocalDate.now());
 		produtoDTO.setImagemProduto(produto.getImagemProduto());
 		produtoDTO.setNomeProduto(produto.getNomeProduto());
 		produtoDTO.setValorUnitario(produto.getValorUnitario());
@@ -160,7 +169,6 @@ public class ProdutoService {
 		Produto produto = new Produto();
 		produto.setIdProduto(produtoDTO.getIdProduto());
 		produto.setDescricaoProduto(produtoDTO.getDescricaoProduto());
-		produto.setDataCadastro(LocalDate.now());
 		produto.setImagemProduto(produtoDTO.getImagemProduto());
 		produto.setNomeProduto(produtoDTO.getNomeProduto());
 		produto.setValorUnitario(produtoDTO.getValorUnitario());

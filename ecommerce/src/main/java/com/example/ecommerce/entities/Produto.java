@@ -38,10 +38,6 @@ public class Produto {
 	@Column(name = "qtd_estoque")
 	private Integer qtdEstoque;
 	
-	@JsonFormat(pattern = "dd/MM/yyyy")
-	@Column(name = "data_cadastro")
-	private LocalDate dataCadastro;
-
 	@Column(name = "valor_unitario")
 	private Double valorUnitario;
 
@@ -82,14 +78,6 @@ public class Produto {
 
 	public void setQtdEstoque(Integer qtdEstoque) {
 		this.qtdEstoque = qtdEstoque;
-	}
-
-	public LocalDate getDataCadastro() {
-		return dataCadastro;
-	}
-
-	public void setDataCadastro(LocalDate dataCadastro) {
-		this.dataCadastro = dataCadastro;
 	}
 
 	public Double getValorUnitario() {
