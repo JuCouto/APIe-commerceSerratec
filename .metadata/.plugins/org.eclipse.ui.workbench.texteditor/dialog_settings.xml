@@ -6,10 +6,21 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
+		<item key="selection" value="Categoria"/>
 		<list key="findhistory">
+			<item value="cliente"/>
+			<item value="Cliente"/>
+			<item value="categria"/>
+			<item value="Categria"/>
+			<item value="pedido"/>
+			<item value="Pedido"/>
 			<item value="@JsonFormat(pattern = &quot;dd/MM/yyyy&quot;)"/>
 		</list>
 		<list key="replacehistory">
+			<item value="categoria"/>
+			<item value="Categoria"/>
+			<item value="categria"/>
+			<item value="Categria"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

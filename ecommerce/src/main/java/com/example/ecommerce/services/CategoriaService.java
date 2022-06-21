@@ -1,9 +1,14 @@
 package com.example.ecommerce.services;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.ReflectionUtils;
 import org.springframework.stereotype.Service;
 
 import com.example.ecommerce.dtos.CategoriaDTO;
@@ -13,6 +18,7 @@ import com.example.ecommerce.entities.Categoria;
 import com.example.ecommerce.entities.Produto;
 import com.example.ecommerce.exceptions.InvalidDescriptionException;
 import com.example.ecommerce.exceptions.InvalidNomeIgualException;
+import com.example.ecommerce.exceptions.NoSuchElementFoundException;
 import com.example.ecommerce.repositories.CategoriaRepository;
 
 @Service
@@ -85,6 +91,22 @@ public class CategoriaService {
 
 		return converterEntidadeParaDTO(novaCategoria);
 	}
+	
+	public CategoriaDTO updateCategoriaPatchDTO(@Valid Integer id, Map<Object, Object> object) {
+		Categoria categoria = findCategoriaById(id);
+		if (categoria == null) {
+			throw new NoSuchElementFoundException("Não existe nenhum Categoria com o ID: " + id + ".");
+		}
+		object.forEach((key, value) -> {
+			Field field = ReflectionUtils.findRequiredField(Categoria.class, (String)key);
+			field.setAccessible(true);
+			ReflectionUtils.setField(field, categoria, value);
+		});
+		
+		Categoria novoCategoria = categoriaRepository.save(categoria);
+		
+		return converterEntidadeParaDTO(novoCategoria);
+	}
 
 	public void deleteCategoria(Integer id) {
 		categoriaRepository.deleteById(id);
@@ -143,4 +165,6 @@ public class CategoriaService {
 			throw new InvalidDescriptionException("Existe uma categoria com essa descrição.");
 		}
 	}
+
+	
 }

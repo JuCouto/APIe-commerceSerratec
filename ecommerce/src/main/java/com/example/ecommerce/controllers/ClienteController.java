@@ -1,6 +1,7 @@
 package com.example.ecommerce.controllers;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -11,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -99,6 +101,12 @@ public class ClienteController {
 	@PutMapping("/dto")
 	public ResponseEntity<ClienteDTO> updateClienteDTO(@Valid @RequestBody ClienteDTO clienteDTO) {
 		ClienteDTO novoClienteDTO = clienteService.updateClienteDTO(clienteDTO);
+		return new ResponseEntity<>(novoClienteDTO, HttpStatus.OK);
+	}
+	
+	@PatchMapping("/dto/{id}")
+	public ResponseEntity<ClienteDTO> updateClientePacthDTO(@Valid @PathVariable Integer id, @RequestBody Map<Object, Object> object) {
+		ClienteDTO novoClienteDTO = clienteService.updateClientePatchDTO(id, object);
 		return new ResponseEntity<>(novoClienteDTO, HttpStatus.OK);
 	}
 

@@ -1,8 +1,11 @@
 package com.example.ecommerce.services;
 
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.ReflectionUtils;
 import org.springframework.stereotype.Service;
 
 import com.example.ecommerce.dtos.ClienteDTO;
@@ -11,6 +14,7 @@ import com.example.ecommerce.entities.Cliente;
 import com.example.ecommerce.entities.Endereco;
 import com.example.ecommerce.exceptions.InvalidCpfException;
 import com.example.ecommerce.exceptions.InvalidEmailException;
+import com.example.ecommerce.exceptions.NoSuchElementFoundException;
 import com.example.ecommerce.repositories.ClienteRepository;
 
 @Service
@@ -65,7 +69,6 @@ public class ClienteService {
 	}
 
 	public ClienteDTO updateClienteDTO(ClienteDTO clienteDTO) {
-		validarCPF(clienteDTO.getCpfCliente());
 		validarEmail(clienteDTO.getEmailCliente());
 		Endereco endereco = enderecoService.consultarCep(clienteDTO.getEnderecoDTO().getCep());
 		endereco.setComplemento(clienteDTO.getEnderecoDTO().getComplemento());
@@ -73,6 +76,22 @@ public class ClienteService {
 		Endereco saveEndereco = enderecoService.saveEndereco(endereco);
 		clienteDTO.setEnderecoDTO(saveEndereco.converterEntidadeParaDTO());
 		Cliente cliente = converterDTOParaEntidade(clienteDTO);
+		
+		Cliente novoCliente = clienteRepository.save(cliente);
+		
+		return converterEntidadeParaDTO(novoCliente);
+	}
+	
+	public ClienteDTO updateClientePatchDTO(Integer id,  Map<Object, Object> object) {
+		Cliente cliente = findClienteById(id);
+		if (cliente == null) {
+			throw new NoSuchElementFoundException("Não existe nenhum cliente com o ID: " + id + ".");
+		}
+		object.forEach((key, value) -> {
+			Field field = ReflectionUtils.findRequiredField(Cliente.class, (String)key);
+			field.setAccessible(true);
+			ReflectionUtils.setField(field, cliente, value);
+		});
 		
 		Cliente novoCliente = clienteRepository.save(cliente);
 		

@@ -1,6 +1,7 @@
 package com.example.ecommerce.controllers;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -11,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -100,6 +102,12 @@ public class PedidoController {
 		return new ResponseEntity<>(novoPedidoDTO, HttpStatus.OK);
 	}
 
+	@PatchMapping("/dto/{id}")
+	public ResponseEntity<PedidoDTO> updatePedidoPatchDTO(@Valid @PathVariable Integer id, @RequestBody Map<Object, Object> object) {
+		PedidoDTO novoPedidoDTO = pedidoService.updatePedidoPatchDTO(id, object);
+		return new ResponseEntity<>(novoPedidoDTO, HttpStatus.OK);
+	}
+	
 	@Operation(summary = "Remover um pedido", responses = {
 	@ApiResponse(responseCode = "200", description = "Deletado com sucesso", content = {
 			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) }) })

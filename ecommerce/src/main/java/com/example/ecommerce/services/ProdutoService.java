@@ -1,11 +1,15 @@
 package com.example.ecommerce.services;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.text.Normalizer;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.util.ReflectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,6 +18,7 @@ import com.example.ecommerce.dtos.ProdutoDTO;
 import com.example.ecommerce.entities.Categoria;
 import com.example.ecommerce.entities.Produto;
 import com.example.ecommerce.exceptions.InvalidDescriptionException;
+import com.example.ecommerce.exceptions.NoSuchElementFoundException;
 import com.example.ecommerce.repositories.ProdutoRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -30,6 +35,7 @@ public class ProdutoService {
 	ArquivoService arquivoService;
 
 	public Page<Produto> findAllProduto(Pageable pageable) {
+		
 		return produtoRepository.findAll(pageable);
 	}
 
@@ -80,7 +86,7 @@ public class ProdutoService {
 	
 	public List<Produto> listAllContains(String palavraChave) {
 		if (palavraChave != null) {
-			return produtoRepository.findByNomeProdutoContainingIgnoreCase(palavraChave);
+			return produtoRepository.findByNomeProdutoContainingIgnoreCase(removerAcentos(palavraChave));
 		}
 		return produtoRepository.findAll();
 	}
@@ -96,6 +102,22 @@ public class ProdutoService {
 	public ProdutoDTO updateProdutoDTO(ProdutoDTO produtoDTO) {
 		Produto produto = converterDTOParaEntidade(produtoDTO);
 		Produto novoProduto = produtoRepository.save(produto);
+		return converterEntidadeParaDTO(novoProduto);
+	}
+	
+	public ProdutoDTO updateProdutoPacthDTO(Integer id,  Map<Object, Object> object) {
+		Produto produto = findProdutoById(id);
+		if (produto == null) {
+			throw new NoSuchElementFoundException("Não existe nenhum cliente com o ID: " + id + ".");
+		}
+		object.forEach((key, value) -> {
+			Field field = ReflectionUtils.findRequiredField(Produto.class, (String)key);
+			field.setAccessible(true);
+			ReflectionUtils.setField(field, produto, value);
+		});
+		
+		Produto novoProduto = produtoRepository.save(produto);
+		
 		return converterEntidadeParaDTO(novoProduto);
 	}
 
@@ -184,4 +206,10 @@ public class ProdutoService {
 			throw new InvalidDescriptionException("Existe um produto com essa descrição.");
 		}
 	}
+	
+	public static String removerAcentos(String str) {
+	    return Normalizer.normalize(str, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
+	}
+
+	
 }

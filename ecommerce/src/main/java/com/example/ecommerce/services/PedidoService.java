@@ -1,12 +1,16 @@
 package com.example.ecommerce.services;
 
+import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.ReflectionUtils;
 import org.springframework.stereotype.Service;
 
 import com.example.ecommerce.dtos.ClienteDTO;
@@ -17,6 +21,7 @@ import com.example.ecommerce.entities.Cliente;
 import com.example.ecommerce.entities.ItemPedido;
 import com.example.ecommerce.entities.Pedido;
 import com.example.ecommerce.entities.Produto;
+import com.example.ecommerce.exceptions.NoSuchElementFoundException;
 import com.example.ecommerce.repositories.PedidoRepository;
 
 @Service
@@ -114,6 +119,22 @@ public class PedidoService {
 			return pedidoDTO;
 		}
 	}
+	
+	public PedidoDTO updatePedidoPatchDTO(@Valid Integer id, Map<Object, Object> object) {
+		Pedido pedido = findPedidoById(id);
+		if (pedido == null) {
+			throw new NoSuchElementFoundException("Não existe nenhum pedido com o ID: " + id + ".");
+		}
+		object.forEach((key, value) -> {
+			Field field = ReflectionUtils.findRequiredField(Pedido.class, (String)key);
+			field.setAccessible(true);
+			ReflectionUtils.setField(field, pedido, value);
+		});
+		
+		Pedido novoPedido = pedidoRepository.save(pedido);
+		
+		return converterEntidadeParaDTO(novoPedido);
+	}
 
 	public void deletePedido(Integer id) {
 		pedidoRepository.deleteById(id);
@@ -180,4 +201,6 @@ public class PedidoService {
 		}
 		return pedido;
 	}
+
+	
 }
