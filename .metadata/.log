@@ -26,3 +26,45 @@ Created Time: 2022-06-21 15:00:33.787
 
 !ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-21 15:02:37.788
 !MESSAGE ClasspathListenerHandler removeClasspathListener sts4.classpath.mbmpLdkL => OK
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-21 18:00:08.850
+!MESSAGE Entering DelegatingStreamConnectionProvider()
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-21 18:00:08.854
+!MESSAGE DelegatingStreamConnectionProvider classloader = org.eclipse.osgi.internal.loader.EquinoxClassLoader@53890f0d[org.springframework.tooling.boot.ls:1.33.0.202204250653(id=569)]
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-21 18:00:08.854
+!MESSAGE SpringBootLanguageServer exists!
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-21 18:00:12.134
+!MESSAGE Boot LS startup time from start to initialized: 3277ms
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-21 18:00:12.276
+!MESSAGE ClasspathListenerHandler addClasspathListener sts4.classpath.vluMvdGLisBatched = true
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-21 18:00:12.277
+!MESSAGE Setting up ClasspathListenerManager
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-21 18:00:12.278
+!MESSAGE Scheduling initial event for all projects ...
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-21 18:00:12.278
+!MESSAGE Scheduling initial event for all projects DONE
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-21 18:00:12.279
+!MESSAGE exists = true open = true => deleted = false
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-21 18:00:12.279
+!MESSAGE ClasspathListenerHandler addClasspathListener sts4.classpath.vluMvdGL => OK
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-21 18:00:12.289
+!MESSAGE classpath=109 entries
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-21 18:00:12.294
+!MESSAGE buffering callback sts4.classpath.vluMvdGL ecommerce false 109
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-21 18:00:12.295
+!MESSAGE executing callback sts4.classpath.vluMvdGL 1 batched events
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-21 18:00:12.706
+!MESSAGE executing callback sts4.classpath.vluMvdGL SUCCESS [done]

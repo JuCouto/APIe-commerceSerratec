@@ -34,9 +34,13 @@ public class ProdutoService {
 	@Autowired
 	ArquivoService arquivoService;
 
-	public Page<Produto> findAllProduto(Pageable pageable) {
+	public Page<Produto> findAllProdutoPage(Pageable pageable) {
 		
 		return produtoRepository.findAll(pageable);
+	}
+	
+	public List<Produto> findAllProduto(){
+		return produtoRepository.findAll();
 	}
 
 	public List<Produto> listAll(String palavraChave) {

@@ -56,9 +56,18 @@ public class ProdutoController {
 			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) })
 	@ApiResponse(responseCode = "404", description = "Recurso não encontrado", content = {
 			@Content(mediaType = "application/json", schema = @Schema(type = "object", implementation = Categoria.class)) })
+	@GetMapping("/page")
+	public ResponseEntity<Page<Produto>> findAllProdutoPage(Pageable pageable) {
+		Page<Produto> produtoList = produtoService.findAllProdutoPage(pageable);
+		if (produtoList.isEmpty()) {
+			throw new EmptyListException("A lista de produto está vazia.");
+		} else {
+			return new ResponseEntity<>(produtoList, HttpStatus.OK);
+		}
+	}
 	@GetMapping
-	public ResponseEntity<Page<Produto>> findAllProduto(Pageable pageable) {
-		Page<Produto> produtoList = produtoService.findAllProduto(pageable);
+	public ResponseEntity<List<Produto>> findAllProduto() {
+		List<Produto> produtoList = produtoService.findAllProduto();
 		if (produtoList.isEmpty()) {
 			throw new EmptyListException("A lista de produto está vazia.");
 		} else {
