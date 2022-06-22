@@ -35,13 +35,13 @@ public class Cliente {
 	private Integer idCliente;
 
 	@Email(message = "E-mail inválido")
-    @NotBlank(message = "E-mail não pode estar em branco.")
+    //@NotBlank(message = "E-mail não pode estar em branco.")
     @Schema(example = "exemplo@exemplo.com.br")
     @Column(name = "email")
     private String emailCliente;
 
 	@Column(name = "nome_completo")
-	@NotBlank(message = "O nome não pode estar em branco.")
+	//@NotBlank(message = "O nome não pode estar em branco.")
 	private String nomeCliente;
 	
 	@Column(name = "data_nascimento")
